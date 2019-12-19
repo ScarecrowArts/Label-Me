@@ -12,6 +12,7 @@ function myScript(thisObj){
     function myScript_buildUI(thisObj){
         myPanel = (thisObj instanceof Panel) ? thisObj : new Window("palette", "labelME", [100, 100, 12, 560], {resizeable:false});
         
+        var img00 = scriptPath + "/labelME/none.png"
         var img01 = scriptPath + "/labelME/red.png"
         var img02 = scriptPath + "/labelME/yellow.png"
         var img03 = scriptPath + "/labelME/aqua.png"
@@ -33,7 +34,6 @@ function myScript(thisObj){
 
         myPanel.grp = myPanel.add(res);
         
-        
         myPanel.margins = 0;
         myPanel.grp.margins = 0;
         myPanel.grp.margins.top = 0;
@@ -47,6 +47,7 @@ function myScript(thisObj){
         myPanel.grp.spacing.right = 0;
         
         //INITIALIZE BUTTONS
+        var button00 = myPanel.grp.add("iconbutton", undefined, img00, "button00")
         var button01 = myPanel.grp.add("iconbutton", undefined, img01, "button01")
         var button02 = myPanel.grp.add("iconbutton", undefined, img02, "button02")
         var button03 = myPanel.grp.add("iconbutton", undefined, img03, "button03")
@@ -65,6 +66,7 @@ function myScript(thisObj){
         var button16 = myPanel.grp.add("iconbutton", undefined, img16, "button16")
         
         //TOOL TIPS
+        button00.helpTip = "None";
         button01.helpTip = "Red";
         button02.helpTip = "Yellow";
         button03.helpTip = "Aqua";
@@ -83,6 +85,7 @@ function myScript(thisObj){
         button16.helpTip = "Dark Green";
 
         //DO THE THING
+        button00.onClick =  onTabClicked00;
         button01.onClick =  onTabClicked01;
         button02.onClick =  onTabClicked02;
         button03.onClick =  onTabClicked03;       
@@ -105,6 +108,11 @@ function myScript(thisObj){
     }
 
     //Yes, I made a function for every color. Please dont @ me
+    function onTabClicked00(){
+        label = 0;
+        runMe(); 
+    }
+
     function onTabClicked01(){
         label = 1; 
         runMe(); 
