@@ -72,7 +72,9 @@ function myScript(thisObj){
             
         //INITIALIZE BUTTONS
         for(i = 0; i < 17; i++){
-            var labelColor1 = app.preferences.getPrefAsLong("Label Preference Color Section 5", "Label Color ID 2 # 1", PREFType.PREF_Type_MACHINE_INDEPENDENT);
+            var labelColor1 = app.preferences.getPrefAsLong("Label Preference Color Section 5", "Label Color ID 2 # " + (i +1), PREFType.PREF_Type_MACHINE_INDEPENDENT);
+            //var labelColor1 = app.settings.getSetting("Label Preference Color Section 5", "Label Color ID 2 # 1", PREFType.PREF_Type_MACHINE_INDEPENDENT);
+            alert("The setting is " + prefCodeToHexCode(labelColor1));
             
             button[i] = myPanel.grp.add("iconbutton", undefined, undefined, {style:'toolbutton'}, "button0" + i)
             
@@ -93,8 +95,8 @@ function myScript(thisObj){
             button[i].padding.right = 0;
             
             button[i].size = [24,24];
-            button[i].fillBrush = button[i].graphics.newBrush(button[i].graphics.BrushType.SOLID_COLOR, [1,0,0,1]);
-            button[i].onDraw = customDraw;            
+            button[i].fillBrush = button[i].graphics.newBrush(button[i].graphics.BrushType.SOLID_COLOR, prefCodeToHexCode(labelColor1));
+            button[i].onDraw = customDraw;
         }        
     
         /*
