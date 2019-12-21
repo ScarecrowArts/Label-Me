@@ -34,6 +34,25 @@ function myScript(thisObj){
 
         myPanel.grp = myPanel.add(res);
         
+        //INITIALIZE BUTTONS
+        var button00 = myPanel.grp.add("iconbutton", undefined, img00, {style:'toolbutton'}, "button00")
+        var button01 = myPanel.grp.add("iconbutton", undefined, img01, {style:'toolbutton'}, "button01")
+        var button02 = myPanel.grp.add("iconbutton", undefined, img02, {style:'toolbutton'}, "button02")
+        var button03 = myPanel.grp.add("iconbutton", undefined, img03, {style:'toolbutton'}, "button03")
+        var button04 = myPanel.grp.add("iconbutton", undefined, img04, {style:'toolbutton'}, "button04")
+        var button05 = myPanel.grp.add("iconbutton", undefined, img05, {style:'toolbutton'}, "button05")
+        var button06 = myPanel.grp.add("iconbutton", undefined, img06, {style:'toolbutton'}, "button06")
+        var button07 = myPanel.grp.add("iconbutton", undefined, img07, {style:'toolbutton'}, "button07")
+        var button08 = myPanel.grp.add("iconbutton", undefined, img08, {style:'toolbutton'}, "button08")
+        var button09 = myPanel.grp.add("iconbutton", undefined, img09, {style:'toolbutton'}, "button09")
+        var button10 = myPanel.grp.add("iconbutton", undefined, img10, {style:'toolbutton'}, "button10")
+        var button11 = myPanel.grp.add("iconbutton", undefined, img11, {style:'toolbutton'}, "button11")
+        var button12 = myPanel.grp.add("iconbutton", undefined, img12, {style:'toolbutton'}, "button12")
+        var button13 = myPanel.grp.add("iconbutton", undefined, img13, {style:'toolbutton'}, "button13")
+        var button14 = myPanel.grp.add("iconbutton", undefined, img14, {style:'toolbutton'}, "button14")
+        var button15 = myPanel.grp.add("iconbutton", undefined, img15, {style:'toolbutton'}, "button15")
+        var button16 = myPanel.grp.add("iconbutton", undefined, img16, {style:'toolbutton'}, "button16")
+        
         myPanel.margins = 0;
         myPanel.grp.margins = 0;
         myPanel.grp.margins.top = 0;
@@ -45,25 +64,6 @@ function myScript(thisObj){
         myPanel.grp.spacing.bottom = 0;
         myPanel.grp.spacing.left = 0;
         myPanel.grp.spacing.right = 0;
-        
-        //INITIALIZE BUTTONS
-        var button00 = myPanel.grp.add("iconbutton", undefined, img00, "button00")
-        var button01 = myPanel.grp.add("iconbutton", undefined, img01, "button01")
-        var button02 = myPanel.grp.add("iconbutton", undefined, img02, "button02")
-        var button03 = myPanel.grp.add("iconbutton", undefined, img03, "button03")
-        var button04 = myPanel.grp.add("iconbutton", undefined, img04, "button04")
-        var button05 = myPanel.grp.add("iconbutton", undefined, img05, "button05")
-        var button06 = myPanel.grp.add("iconbutton", undefined, img06, "button06")
-        var button07 = myPanel.grp.add("iconbutton", undefined, img07, "button07")
-        var button08 = myPanel.grp.add("iconbutton", undefined, img08, "button08")
-        var button09 = myPanel.grp.add("iconbutton", undefined, img09, "button09")
-        var button10 = myPanel.grp.add("iconbutton", undefined, img10, "button10")
-        var button11 = myPanel.grp.add("iconbutton", undefined, img11, "button11")
-        var button12 = myPanel.grp.add("iconbutton", undefined, img12, "button12")
-        var button13 = myPanel.grp.add("iconbutton", undefined, img13, "button13")
-        var button14 = myPanel.grp.add("iconbutton", undefined, img14, "button14")
-        var button15 = myPanel.grp.add("iconbutton", undefined, img15, "button15")
-        var button16 = myPanel.grp.add("iconbutton", undefined, img16, "button16")
         
         //TOOL TIPS
         button00.helpTip = "None";
