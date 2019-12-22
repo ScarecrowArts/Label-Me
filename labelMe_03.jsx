@@ -171,7 +171,10 @@ function myScript(thisObj){
                     if(i!=1){             
                         myLine = textArray[j];
                         
-                        myCode = myLine.split('FF')[1];
+                        myCode0 = myLine.split('" = ')[1];
+                        myCode = myCode0.substring(2,myCode0.length); 
+                        
+                        
                         myDecodedCode = prefCodeToHexCode (myCode);
                         rgb = convertHex(myDecodedCode);   
                         
@@ -180,8 +183,11 @@ function myScript(thisObj){
                         if(hasChecked1 == 0){
                             myLine = textArray[j];
 
-                            myCode = myLine.split('FF')[1];
-                            myDecodedCode = prefCodeToHexCode (myCode);
+                        myCode0 = myLine.split('" = ')[1];
+                        myCode = myCode0.substring(2,myCode0.length); 
+
+
+                      myDecodedCode = prefCodeToHexCode (myCode);
                             rgb = convertHex(myDecodedCode);
                             
                             colours[0] =  rgb;
@@ -197,7 +203,7 @@ function myScript(thisObj){
             //var labelColor1 = app.preferences.getPrefAsLong("Label Preference Color Section 5", "Label Color ID 2 # " + (i +1), PREFType.PREF_Type_MACHINE_INDEPENDENT);
             button[i] = myPanel.grp.add("iconbutton", undefined, undefined, {style:'toolbutton'}, "button0" + i)
             //alert(colours[1]); 
-            
+ 
             //MARGINS REMOVED
             button[i].margins = 0;
             button[i].margins.top = 0;
