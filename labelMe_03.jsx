@@ -24,12 +24,12 @@ function myScript(thisObj){
             prefFilePath = file.readln();
             file.close(); 
             prefFile = File([prefFilePath]); 
+            
         }else{      
             //prefFile = file.openDlg("Open a file", "Acceptable Files:*.txt,*.json,*xml");
             username = prompt("Username","scarecrow");
             version = prompt("AE Version",17); 
             prefFilePath = "/Users/" + username + "/AppData/Roaming/Adobe/After Effects/"+ version + ".0/Adobe After Effects 17.0 Prefs-indep-general.txt";
-            //myFilePath = prefFile.fsName;
             prefFile = File([prefFilePath]); 
             logInfo(prefFilePath); 
             dumpLog();
@@ -163,10 +163,7 @@ function myScript(thisObj){
         hasChecked1 = 0;
         
         for (var i = 1; i <= 16; i++){      
-            // var sect = "Label Preference Color Section 5";     
-            // var key = "Label Color ID 2 # " + i.toString();      
-            //var prefType = PREFType.PREF_Type_MACHINE_INDEPENDENT;    
-            //var thePref = app.preferences.getPrefAsString(sect,key, prefType); 
+
 
             for(j = 0; j < textArray.length; j++){
                 str = textArray[j].substr(1,20+i.toString().length);
@@ -174,17 +171,21 @@ function myScript(thisObj){
 
                 if(str == '"Label Color ID 2 # ' + i){
                     if(i!=1){    
+                     
                         myLine = textArray[j];
+
                         myCode = myLine.split('FF')[1];
                         myDecodedCode = prefCodeToHexCode (myCode);
-                        rgb = convertHex(myDecodedCode);         
+                        rgb = convertHex(myDecodedCode);     
+                         
                         colours[i-1] =  rgb;
                     }else{
                         if(hasChecked1 == 0){
                             myLine = textArray[j];
+
                             myCode = myLine.split('FF')[1];
                             myDecodedCode = prefCodeToHexCode (myCode);
-                            rgb = convertHex(myDecodedCode);         
+                            rgb = convertHex(myDecodedCode);
                             colours[0] =  rgb;
                             hasChecked1 = 1; 
                         }
@@ -192,6 +193,8 @@ function myScript(thisObj){
                 }
             }
         }            
+    
+        
             
         //INITIALIZE BUTTONS
         for(i = 0; i < 17; i++){
@@ -227,7 +230,45 @@ function myScript(thisObj){
             button[i].onDraw = customDraw;
         }        
         
+        
+                hasChecked2 = 0;
+        
+        for (var i = 1; i <= 16; i++){      
+
+            for(j = 0; j < textArray.length; j++){
+                str = textArray[j].substr(1,19+i.toString().length);
+                length = str.length; 
+run = 0; 
+runRed = 0; 
+                if(str == '"Label Text ID 2 # ' + i){
+
+                    if(i!=1){
+                        if(run == 0){
+                        myLine = textArray[j];
+                        button[i].helpTip = myLine.split('=')[1];
+                        }
+                    run = 1; 
+                    }else{
+                        
+                        if(hasChecked2 == 0){
+
+                            myLine = textArray[j];
+                            if(textArray[j-i] == '["Label Preference Text Section 7"]'){
+                            button[1].helpTip = myLine.split('=')[1];
+                            hasChecked2 = 1; 
+                            
+                            }
+                             
+
+                        }
+                    
+                    }
+                }
+            }
+        }  
+    
         //TOOL TIPS
+        /*
         button[0].helpTip = "None";
         button[1].helpTip = "Red";
         button[2].helpTip = "Yellow";
@@ -245,7 +286,7 @@ function myScript(thisObj){
         button[14].helpTip = "Cyan";
         button[15].helpTip = "Sandstone";
         button[16].helpTip = "Dark Green";
-
+*/
         //DO THE THING
         button[0].onClick =  onTabClicked00;
         button[1].onClick =  onTabClicked01;
