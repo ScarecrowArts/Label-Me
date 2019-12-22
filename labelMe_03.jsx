@@ -2,14 +2,10 @@
 //  http://www.scarecrowarts.com
 //  Version 0.03
 
-//NOT WORTH $19 USD THAT'S FOR SURE
-
-
 var scriptPath = File($.fileName).parent.fsName;
-var file = File; 
-var prefFile = File; 
-var textArray = []; 
-
+var file = File;
+var prefFile = File;
+var textArray = [];
 
 var myPanel;
 var label; 
@@ -19,72 +15,58 @@ var button = [];
 function myScript(thisObj){
     function myScript_buildUI(thisObj){
         myPanel = (thisObj instanceof Panel) ? thisObj : new Window("palette", "labelME", [100, 100, 12, 560], {resizeable:false});
-       mySaveFilePath = "~/Documents/";
+        mySaveFilePath = "~/Documents/";
 
-       var file = File(mySaveFilePath + "Path" + ".txt");
+        var file = File(mySaveFilePath + "Path" + ".txt");
        
-            if (file.exists) {
-                file.open("r"); 
-             prefFilePath = file.readln();  
-             file.close(); 
-             prefFile = File([prefFilePath]); 
-            }else{
-                
-               //prefFile = file.openDlg("Open a file", "Acceptable Files:*.txt,*.json,*xml");
-               username = prompt("Username","scarecrow");
-               version = prompt("AE Version",17); 
-               myFilePath = "/Users/" + username + "/AppData/Roaming/Adobe/After Effects/"+ version + ".0/Adobe After Effects 17.0 Prefs-indep-general.txt";
-                 //myFilePath = prefFile.fsName;
-                 prefFile = File([myFilePath]); 
-                logInfo(myFilePath); 
-                dumpLog();
-               }
-          
-
-
-       
-     function logInfo(Txt){
-        logData += String(Txt);
-    }
+        if (file.exists){
+            file.open("r");
+            prefFilePath = file.readln();
+            file.close(); 
+            prefFile = File([prefFilePath]); 
+        }else{      
+            //prefFile = file.openDlg("Open a file", "Acceptable Files:*.txt,*.json,*xml");
+            username = prompt("Username","scarecrow");
+            version = prompt("AE Version",17); 
+            prefFilePath = "/Users/" + username + "/AppData/Roaming/Adobe/After Effects/"+ version + ".0/Adobe After Effects 17.0 Prefs-indep-general.txt";
+            //myFilePath = prefFile.fsName;
+            prefFile = File([prefFilePath]); 
+            logInfo(prefFilePath); 
+            dumpLog();
+            
+            function logInfo(Txt){
+                logData += String(Txt);
+            }
     
-    function dumpLog() {
-        var file = new File(mySaveFilePath + "Path" + ".txt");
-    
-        //The Magic
-        file.open("e", "TEXT", "????"); 
-        file.seek(0,2);
-        $.os.search(/windows/i)  != -1 ? file.lineFeed = 'windows'  : file.lineFeed = 'macintosh';  
-        file.write(logData); 
-        file.close();
-        logData = "";
-    }
+            function dumpLog(){
+                var file = new File(mySaveFilePath + "Path" + ".txt");
+        
+                //The Magic
+                file.open("e", "TEXT", "????"); 
+                file.seek(0,2);
+                $.os.search(/windows/i)  != -1 ? file.lineFeed = 'windows'  : file.lineFeed = 'macintosh';  
+                file.write(logData); 
+                file.close();
+                logData = "";
+            }
+        }
        
-       
-
        var textArray = readTxt();
         
         function readTxt() {
-                var txtArray = [];
-                var currentLine;
+            var txtArray = [];
+            var currentLine;
 
-                prefFile.open("r");
-                            while(!prefFile.eof){
-                                    currentLine = prefFile.readln();
-                                    txtArray.push(currentLine);
-                                }
-                            prefFile.close();
-    
-    return txtArray;
-    }    
-
-        
-        
-        
-        
-        
-        
-        
-
+            prefFile.open("r");
+            while(!prefFile.eof){
+                currentLine = prefFile.readln();
+                txtArray.push(currentLine);
+            }
+            
+            prefFile.close();
+            return txtArray;
+        }    
+/*
         img[0] = scriptPath + "/labelME/none.png"
         img[1] = scriptPath + "/labelME/red.png"
         img[2] = scriptPath + "/labelME/yellow.png"
@@ -102,7 +84,7 @@ function myScript(thisObj){
         img[14] = scriptPath + "/labelME/cyan.png"
         img[15] = scriptPath + "/labelME/sandstone.png"
         img[16] = scriptPath + "/labelME/darkgreen.png"
-
+*/
         res = "group\{\orientation:'column',\}";
 
         //MARGINS REMOVED
@@ -143,93 +125,81 @@ function myScript(thisObj){
                 });
             };
         
-   function ascii_to_hexa(str)
-  {
-	var arr1 = [];
-	for (var n = 0, l = str.length; n < l; n ++) 
-     {
-		var hex = Number(str.charCodeAt(n)).toString(16);
-		arr1.push(hex);
-	 }
-	return arr1.join('');
-   }     
+        function ascii_to_hexa(str){
+            var arr1 = [];
+            
+            for (var n = 0, l = str.length; n < l; n ++) {
+                var hex = Number(str.charCodeAt(n)).toString(16);
+                arr1.push(hex);
+            }
+            
+            return arr1.join('');
+        }     
 
-function convertHex(hex){
-    var result = []; 
-    hex = hex.replace('#','');
-    r = parseInt(hex.substring(0,2), 16);
-    g = parseInt(hex.substring(2,4), 16);
-    b = parseInt(hex.substring(4,6), 16);
+        function convertHex(hex){
+            var result = []; 
+            hex = hex.replace('#','');
+            r = parseInt(hex.substring(0,2), 16);
+            g = parseInt(hex.substring(2,4), 16);
+            b = parseInt(hex.substring(4,6), 16);
 
-    result = [r/255,g/255,b/255,1];
-    return result;
-}
-        
-           
-function asciiToRGB(str) {      
-    var arr = [];      
-    for (var i = 1, l = str.length; i < l; i ++) {     
-     var hex = Number(str.charCodeAt(i)).toString(16);      
-     arr.push(parseInt(hex, 16)/65533);     
-     }   
-     arr.push(1);
-     return arr;  
-} 
-
-var colours = [];
-hasChecked1 = 0; 
-for (var i = 1; i <= 16; i++){    
-    
-//    var sect = "Label Preference Color Section 5";     
-  //  var key = "Label Color ID 2 # " + i.toString();      
-    //var prefType = PREFType.PREF_Type_MACHINE_INDEPENDENT;    
-    //var thePref = app.preferences.getPrefAsString(sect,key, prefType); 
-
-for(j = 0; j < textArray.length; j++){
-str = textArray[j].substr(1,20+i.toString().length);
-length = str.length; 
-
-    if(str == '"Label Color ID 2 # ' + i){
-    if(i!=1){    
-    myLine = textArray[j];
-    myCode = myLine.split('FF')[1];
-    myDecodedCode = prefCodeToHexCode (myCode);
-    rgb = convertHex(myDecodedCode);         
-    colours[i-1] =  rgb;
-    }else{
-        
-    if(hasChecked1 == 0){
-    myLine = textArray[j];
-    myCode = myLine.split('FF')[1];
-    myDecodedCode = prefCodeToHexCode (myCode);
-    rgb = convertHex(myDecodedCode);         
-    colours[0] =  rgb;
-    hasChecked1 = 1; 
-    }
-    
+            result = [r/255,g/255,b/255,1];
+            return result;
         }
-    
-    
+                
+                   
+        function asciiToRGB(str) {      
+            var arr = [];      
+            for (var i = 1, l = str.length; i < l; i ++) {     
+                var hex = Number(str.charCodeAt(i)).toString(16);      
+                arr.push(parseInt(hex, 16)/65533);     
+            }   
         
-        }
-    
-    
-    }
-    
+             arr.push(1);
+             return arr;  
+        } 
 
+        var colours = [];
+        hasChecked1 = 0;
+        
+        for (var i = 1; i <= 16; i++){      
+            // var sect = "Label Preference Color Section 5";     
+            // var key = "Label Color ID 2 # " + i.toString();      
+            //var prefType = PREFType.PREF_Type_MACHINE_INDEPENDENT;    
+            //var thePref = app.preferences.getPrefAsString(sect,key, prefType); 
 
+            for(j = 0; j < textArray.length; j++){
+                str = textArray[j].substr(1,20+i.toString().length);
+                length = str.length; 
 
-
-
- }            
+                if(str == '"Label Color ID 2 # ' + i){
+                    if(i!=1){    
+                        myLine = textArray[j];
+                        myCode = myLine.split('FF')[1];
+                        myDecodedCode = prefCodeToHexCode (myCode);
+                        rgb = convertHex(myDecodedCode);         
+                        colours[i-1] =  rgb;
+                    }else{
+                        if(hasChecked1 == 0){
+                            myLine = textArray[j];
+                            myCode = myLine.split('FF')[1];
+                            myDecodedCode = prefCodeToHexCode (myCode);
+                            rgb = convertHex(myDecodedCode);         
+                            colours[0] =  rgb;
+                            hasChecked1 = 1; 
+                        }
+                    }
+                }
+            }
+        }            
             
         //INITIALIZE BUTTONS
         for(i = 0; i < 17; i++){
             //var labelColor1 = app.preferences.getPrefAsLong("Label Preference Color Section 5", "Label Color ID 2 # " + (i +1), PREFType.PREF_Type_MACHINE_INDEPENDENT);
-    
-            
             button[i] = myPanel.grp.add("iconbutton", undefined, undefined, {style:'toolbutton'}, "button0" + i)
             //alert(colours[1]); 
+            
+            //MARGINS REMOVED
             button[i].margins = 0;
             button[i].margins.top = 0;
             button[i].margins.bottom = 0;
@@ -247,33 +217,15 @@ length = str.length;
             button[i].padding.right = 0;
             
             button[i].size = [24,24];
+            
             if(i!=0 ){
-            button[i].fillBrush = button[i].graphics.newBrush(button[i].graphics.BrushType.SOLID_COLOR, colours[i-1]);
+                button[i].fillBrush = button[i].graphics.newBrush(button[i].graphics.BrushType.SOLID_COLOR, colours[i-1]);
+            }else{
+                button[i].fillBrush = button[i].graphics.newBrush(button[i].graphics.BrushType.SOLID_COLOR, [0.4, 0.4, 0.4, 1]);
             }
-
 
             button[i].onDraw = customDraw;
         }        
-    
-        /*
-        var button00 = myPanel.grp.add("iconbutton", undefined, img00, {style:'toolbutton'}, "button00")
-        var button01 = myPanel.grp.add("iconbutton", undefined, img01, {style:'toolbutton'}, "button01")
-        var button02 = myPanel.grp.add("iconbutton", undefined, img02, {style:'toolbutton'}, "button02")
-        var button03 = myPanel.grp.add("iconbutton", undefined, img03, {style:'toolbutton'}, "button03")
-        var button04 = myPanel.grp.add("iconbutton", undefined, img04, {style:'toolbutton'}, "button04")
-        var button05 = myPanel.grp.add("iconbutton", undefined, img05, {style:'toolbutton'}, "button05")
-        var button06 = myPanel.grp.add("iconbutton", undefined, img06, {style:'toolbutton'}, "button06")
-        var button07 = myPanel.grp.add("iconbutton", undefined, img07, {style:'toolbutton'}, "button07")
-        var button08 = myPanel.grp.add("iconbutton", undefined, img08, {style:'toolbutton'}, "button08")
-        var button09 = myPanel.grp.add("iconbutton", undefined, img09, {style:'toolbutton'}, "button09")
-        var button10 = myPanel.grp.add("iconbutton", undefined, img10, {style:'toolbutton'}, "button10")
-        var button11 = myPanel.grp.add("iconbutton", undefined, img11, {style:'toolbutton'}, "button11")
-        var button12 = myPanel.grp.add("iconbutton", undefined, img12, {style:'toolbutton'}, "button12")
-        var button13 = myPanel.grp.add("iconbutton", undefined, img13, {style:'toolbutton'}, "button13")
-        var button14 = myPanel.grp.add("iconbutton", undefined, img14, {style:'toolbutton'}, "button14")
-        var button15 = myPanel.grp.add("iconbutton", undefined, img15, {style:'toolbutton'}, "button15")
-        var button16 = myPanel.grp.add("iconbutton", undefined, img16, {style:'toolbutton'}, "button16")
-        */
         
         //TOOL TIPS
         button[0].helpTip = "None";
@@ -292,7 +244,7 @@ length = str.length;
         button[13].helpTip = "Fuchsia";
         button[14].helpTip = "Cyan";
         button[15].helpTip = "Sandstone";
-        //button[16].helpTip = "Dark Green";
+        button[16].helpTip = "Dark Green";
 
         //DO THE THING
         button[0].onClick =  onTabClicked00;
@@ -311,7 +263,7 @@ length = str.length;
         button[13].onClick =  onTabClicked13;       
         button[14].onClick =  onTabClicked14;
         button[15].onClick =  onTabClicked15;
-        //button[16].onClick =  onTabClicked16;
+        button[16].onClick =  onTabClicked16;
 
         myPanel.layout.layout(true);
         return myPanel;
@@ -426,9 +378,6 @@ function runMe(){
     myPanel.update();
 	
     app.endUndoGroup();
-    
-
-    
 }
 myScript(this);
 
