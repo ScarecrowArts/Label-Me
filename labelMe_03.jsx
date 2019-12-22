@@ -41,7 +41,7 @@ function myScript(thisObj){
             function dumpLog(){
                 var file = new File(mySaveFilePath + "Path" + ".txt");
         
-                //The Magic
+                //MAGIC
                 file.open("e", "TEXT", "????"); 
                 file.seek(0,2);
                 $.os.search(/windows/i)  != -1 ? file.lineFeed = 'windows'  : file.lineFeed = 'macintosh';  
@@ -116,7 +116,6 @@ function myScript(thisObj){
             }
         }
     
-      
         function prefCodeToHexCode(str){
             return str.replace(/"([^"]+)"/g, function(u, code){
                 var result = "";
@@ -147,9 +146,9 @@ function myScript(thisObj){
             return result;
         }
                 
-                   
         function asciiToRGB(str) {      
             var arr = [];      
+            
             for (var i = 1, l = str.length; i < l; i ++) {     
                 var hex = Number(str.charCodeAt(i)).toString(16);      
                 arr.push(parseInt(hex, 16)/65533);     
@@ -162,22 +161,20 @@ function myScript(thisObj){
         var colours = [];
         hasChecked1 = 0;
         
+        //DECODE COLOR
         for (var i = 1; i <= 16; i++){      
-
-
             for(j = 0; j < textArray.length; j++){
                 str = textArray[j].substr(1,20+i.toString().length);
                 length = str.length; 
 
                 if(str == '"Label Color ID 2 # ' + i){
-                    if(i!=1){    
-                     
+                    if(i!=1){             
                         myLine = textArray[j];
-
+                        
                         myCode = myLine.split('FF')[1];
                         myDecodedCode = prefCodeToHexCode (myCode);
-                        rgb = convertHex(myDecodedCode);     
-                         
+                        rgb = convertHex(myDecodedCode);   
+                        
                         colours[i-1] =  rgb;
                     }else{
                         if(hasChecked1 == 0){
@@ -186,6 +183,7 @@ function myScript(thisObj){
                             myCode = myLine.split('FF')[1];
                             myDecodedCode = prefCodeToHexCode (myCode);
                             rgb = convertHex(myDecodedCode);
+                            
                             colours[0] =  rgb;
                             hasChecked1 = 1; 
                         }
@@ -193,9 +191,7 @@ function myScript(thisObj){
                 }
             }
         }            
-    
-        
-            
+
         //INITIALIZE BUTTONS
         for(i = 0; i < 17; i++){
             //var labelColor1 = app.preferences.getPrefAsLong("Label Preference Color Section 5", "Label Color ID 2 # " + (i +1), PREFType.PREF_Type_MACHINE_INDEPENDENT);
@@ -230,63 +226,41 @@ function myScript(thisObj){
             button[i].onDraw = customDraw;
         }        
         
+        hasChecked2 = 0;
         
-                hasChecked2 = 0;
-        
+        //TOOL TIPS
         for (var i = 1; i <= 16; i++){      
-
             for(j = 0; j < textArray.length; j++){
                 str = textArray[j].substr(1,19+i.toString().length);
                 length = str.length; 
-run = 0; 
-runRed = 0; 
+                run = 0; 
+                runRed = 0; 
+                
                 if(str == '"Label Text ID 2 # ' + i){
-
                     if(i!=1){
                         if(run == 0){
-                        myLine = textArray[j];
-                        button[i].helpTip = myLine.split('=')[1];
-                        }
-                    run = 1; 
-                    }else{
-                        
-                        if(hasChecked2 == 0){
-
                             myLine = textArray[j];
-                            if(textArray[j-i] == '["Label Preference Text Section 7"]'){
-                            button[1].helpTip = myLine.split('=')[1];
-                            hasChecked2 = 1; 
-                            
-                            }
-                             
-
+                            button[i].helpTip = myLine.split('=')[1];
                         }
-                    
+                        
+                        run = 1; 
+                    }else{
+                        if(hasChecked2 == 0){
+                                myLine = textArray[j];
+                                
+                            if(textArray[j-i] == '["Label Preference Text Section 7"]'){
+                                button[1].helpTip = myLine.split('=')[1];
+                                hasChecked2 = 1; 
+                            }       
+                        }           
                     }
                 }
             }
         }  
-    
-        //TOOL TIPS
-        /*
-        button[0].helpTip = "None";
-        button[1].helpTip = "Red";
-        button[2].helpTip = "Yellow";
-        button[3].helpTip = "Aqua";
-        button[4].helpTip = "Pink";
-        button[5].helpTip = "Lavender";
-        button[6].helpTip = "Peach";
-        button[7].helpTip = "Sea Foam";
-        button[8].helpTip = "Blue";
-        button[9].helpTip = "Green";
-        button[10].helpTip = "Purple";
-        button[11].helpTip = "Orange";
-        button[12].helpTip = "Brown";
-        button[13].helpTip = "Fuchsia";
-        button[14].helpTip = "Cyan";
-        button[15].helpTip = "Sandstone";
-        button[16].helpTip = "Dark Green";
-*/
+        
+        //FIX NONE TOOLTIP
+        button[0].helpTip = '"None"';
+
         //DO THE THING
         button[0].onClick =  onTabClicked00;
         button[1].onClick =  onTabClicked01;
