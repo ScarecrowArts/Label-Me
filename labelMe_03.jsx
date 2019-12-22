@@ -4,7 +4,13 @@
 
 //NOT WORTH $19 USD THAT'S FOR SURE
 
+
 var scriptPath = File($.fileName).parent.fsName;
+var file = File; 
+var prefFile = File; 
+var textArray = []; 
+
+
 var myPanel;
 var label; 
 var img = [];
@@ -13,7 +19,67 @@ var button = [];
 function myScript(thisObj){
     function myScript_buildUI(thisObj){
         myPanel = (thisObj instanceof Panel) ? thisObj : new Window("palette", "labelME", [100, 100, 12, 560], {resizeable:false});
+       mySaveFilePath = (File($.fileName).parent.fsName).toString().replace(/\\/g, '/');
+       var file = File(mySaveFilePath + "Path" + ".txt");
+       
+            if (file.exists) {
+                file.open("r"); 
+             prefFilePath = file.readln();  
+             file.close(); 
+             prefFile = File([prefFilePath]); 
+            }else{
+                
+               prefFile = file.openDlg("Open a file", "Acceptable Files:*.txt,*.json,*xml");
+                 myFilePath = prefFile.fsName;
+                logInfo(myFilePath); 
+                dumpLog();
+               }
+          
+
+
+       
+     function logInfo(Txt){
+        logData += String(Txt);
+    }
+    
+    function dumpLog() {
+        var file = new File(mySaveFilePath + "Path" + ".txt");
+    
+        //The Magic
+        file.open("e", "TEXT", "????"); 
+        file.seek(0,2);
+        $.os.search(/windows/i)  != -1 ? file.lineFeed = 'windows'  : file.lineFeed = 'macintosh';  
+        file.write(logData); 
+        file.close();
+        logData = "";
+    }
+       
+       
+
+       var textArray = readTxt();
         
+        function readTxt() {
+                var txtArray = [];
+                var currentLine;
+
+                prefFile.open("r");
+                            while(!prefFile.eof){
+                                    currentLine = prefFile.readln();
+                                    txtArray.push(currentLine);
+                                }
+                            prefFile.close();
+    
+    return txtArray;
+    }    
+
+        
+        
+        
+        
+        
+        
+        
+
         img[0] = scriptPath + "/labelME/none.png"
         img[1] = scriptPath + "/labelME/red.png"
         img[2] = scriptPath + "/labelME/yellow.png"
@@ -63,7 +129,7 @@ function myScript(thisObj){
             }
         }
     
-        /*
+      
         function prefCodeToHexCode(str){
             return str.replace(/"([^"]+)"/g, function(u, code){
                 var result = "";
@@ -71,16 +137,94 @@ function myScript(thisObj){
                 return result;
                 });
             };
-        */
+        
+   function ascii_to_hexa(str)
+  {
+	var arr1 = [];
+	for (var n = 0, l = str.length; n < l; n ++) 
+     {
+		var hex = Number(str.charCodeAt(n)).toString(16);
+		arr1.push(hex);
+	 }
+	return arr1.join('');
+   }     
+
+function convertHex(hex){
+    var result = []; 
+    hex = hex.replace('#','');
+    r = parseInt(hex.substring(0,2), 16);
+    g = parseInt(hex.substring(2,4), 16);
+    b = parseInt(hex.substring(4,6), 16);
+
+    result = [r/255,g/255,b/255,1];
+    return result;
+}
+        
+           
+function asciiToRGB(str) {      
+    var arr = [];      
+    for (var i = 1, l = str.length; i < l; i ++) {     
+     var hex = Number(str.charCodeAt(i)).toString(16);      
+     arr.push(parseInt(hex, 16)/65533);     
+     }   
+     arr.push(1);
+     return arr;  
+} 
+
+var colours = [];
+hasChecked1 = 0; 
+for (var i = 1; i <= 16; i++){    
+    
+//    var sect = "Label Preference Color Section 5";     
+  //  var key = "Label Color ID 2 # " + i.toString();      
+    //var prefType = PREFType.PREF_Type_MACHINE_INDEPENDENT;    
+    //var thePref = app.preferences.getPrefAsString(sect,key, prefType); 
+
+for(j = 0; j < textArray.length; j++){
+str = textArray[j].substr(1,20+i.toString().length);
+length = str.length; 
+
+    if(str == '"Label Color ID 2 # ' + i){
+    if(i!=1){    
+    myLine = textArray[j];
+    myCode = myLine.split('FF')[1];
+    myDecodedCode = prefCodeToHexCode (myCode);
+    rgb = convertHex(myDecodedCode);         
+    colours[i-1] =  rgb;
+    }else{
+        
+    if(hasChecked1 == 0){
+    myLine = textArray[j];
+    myCode = myLine.split('FF')[1];
+    myDecodedCode = prefCodeToHexCode (myCode);
+    rgb = convertHex(myDecodedCode);         
+    colours[0] =  rgb;
+    hasChecked1 = 1; 
+    }
+    
+        }
+    
+    
+        
+        }
+    
+    
+    }
+    
+
+
+
+
+
+ }            
             
         //INITIALIZE BUTTONS
         for(i = 0; i < 17; i++){
             //var labelColor1 = app.preferences.getPrefAsLong("Label Preference Color Section 5", "Label Color ID 2 # " + (i +1), PREFType.PREF_Type_MACHINE_INDEPENDENT);
-            //var labelColor1 = app.settings.getSetting("Label Preference Color Section 5", "Label Color ID 2 # 1", PREFType.PREF_Type_MACHINE_INDEPENDENT);
-            //alert("The setting is " + prefCodeToHexCode(labelColor1));
+    
             
             button[i] = myPanel.grp.add("iconbutton", undefined, undefined, {style:'toolbutton'}, "button0" + i)
-            
+            //alert(colours[1]); 
             button[i].margins = 0;
             button[i].margins.top = 0;
             button[i].margins.bottom = 0;
@@ -98,7 +242,11 @@ function myScript(thisObj){
             button[i].padding.right = 0;
             
             button[i].size = [24,24];
-            button[i].fillBrush = button[i].graphics.newBrush(button[i].graphics.BrushType.SOLID_COLOR, [1,0,0,1]);
+            if(i!=0 ){
+            button[i].fillBrush = button[i].graphics.newBrush(button[i].graphics.BrushType.SOLID_COLOR, colours[i-1]);
+            }
+
+
             button[i].onDraw = customDraw;
         }        
     
@@ -139,7 +287,7 @@ function myScript(thisObj){
         button[13].helpTip = "Fuchsia";
         button[14].helpTip = "Cyan";
         button[15].helpTip = "Sandstone";
-        button[16].helpTip = "Dark Green";
+        //button[16].helpTip = "Dark Green";
 
         //DO THE THING
         button[0].onClick =  onTabClicked00;
@@ -158,7 +306,7 @@ function myScript(thisObj){
         button[13].onClick =  onTabClicked13;       
         button[14].onClick =  onTabClicked14;
         button[15].onClick =  onTabClicked15;
-        button[16].onClick =  onTabClicked16;
+        //button[16].onClick =  onTabClicked16;
 
         myPanel.layout.layout(true);
         return myPanel;
@@ -273,6 +421,9 @@ function runMe(){
     myPanel.update();
 	
     app.endUndoGroup();
+    
+
+    
 }
 myScript(this);
 
