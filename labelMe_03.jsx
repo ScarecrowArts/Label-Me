@@ -19,7 +19,8 @@ var button = [];
 function myScript(thisObj){
     function myScript_buildUI(thisObj){
         myPanel = (thisObj instanceof Panel) ? thisObj : new Window("palette", "labelME", [100, 100, 12, 560], {resizeable:false});
-       mySaveFilePath = (File($.fileName).parent.fsName).toString().replace(/\\/g, '/');
+       mySaveFilePath = (File($.fileName).fsName).toString().replace(/\\/g, '/');
+
        var file = File(mySaveFilePath + "Path" + ".txt");
        
             if (file.exists) {
@@ -29,8 +30,12 @@ function myScript(thisObj){
              prefFile = File([prefFilePath]); 
             }else{
                 
-               prefFile = file.openDlg("Open a file", "Acceptable Files:*.txt,*.json,*xml");
-                 myFilePath = prefFile.fsName;
+               //prefFile = file.openDlg("Open a file", "Acceptable Files:*.txt,*.json,*xml");
+               username = prompt("Username","scarecrow");
+               version = prompt("AE Version",17); 
+               myFilePath = "/Users/" + username + "/AppData/Roaming/Adobe/After Effects/"+ version + ".0/Adobe After Effects 17.0 Prefs-indep-general.txt";
+                 //myFilePath = prefFile.fsName;
+                 prefFile = File([myFilePath]); 
                 logInfo(myFilePath); 
                 dumpLog();
                }
