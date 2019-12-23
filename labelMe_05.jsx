@@ -529,8 +529,24 @@ if (activeItem != null && activeItem instanceof CompItem) {}else{
             }
     
     }                            
-                            
-                            
+       
+ if(app.project.selection.length == 1){
+     layer = app.project.selection[0]; 
+
+                    if(layer instanceof FootageItem){
+                    layer.label = Number(videoLabel); 
+                    }
+                
+                  
+                if(layer instanceof CompItem){
+                    layer.label = Number(compLabel); 
+                    }              
+                
+                 if(layer instanceof FolderItem){
+                    layer.label = Number(folderLabel); 
+                    }               
+    }
+                           
                             
                             
                             
@@ -542,7 +558,7 @@ if (activeItem != null && activeItem instanceof CompItem) {}else{
                                     }
                                 
                         for(b = 0; b < layerNum; b++){             
-                            
+                                 alert(layer.typeName); 
                             if(activeItem instanceof CompItem){
                             layer = app.project.activeItem.selectedLayers[b];
                             }else{
