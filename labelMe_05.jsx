@@ -33,8 +33,9 @@ function myScript(thisObj){
 }else{
                 macPath1 = userData .toString();
                 macPath = macPath1.substring(0,macPath1.lastIndexOf("/")+1);
-                prefFilePath = macPath + "/Preferences/Adobe/After Effects/"+ version + "/Adobe After Effects " +  version + " Prefs-indep-general.txt";
-                
+
+                prefFilePath = macPath + "Preferences/Adobe/After Effects/"+ version + "/Adobe After Effects " +  version + " Prefs.txt";
+
     }
             prefFile = File([prefFilePath]); 
  
