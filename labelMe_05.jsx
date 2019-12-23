@@ -202,7 +202,7 @@ function myScript(thisObj){
         }            
 
         //INITIALIZE BUTTONS
-        for(i = 0; i < 17; i++){
+        for(i = 0; i <= 17; i++){
             button[i] = myPanel.grp.add("iconbutton", undefined, undefined, {style:'toolbutton'}, "button0" + i)
  
             //MARGINS REMOVED
@@ -224,7 +224,7 @@ function myScript(thisObj){
             
             button[i].size = [24,24];
             
-            if(i!=0 ){
+            if(i!=0 && i!= 17){
                 button[i].fillBrush = button[i].graphics.newBrush(button[i].graphics.BrushType.SOLID_COLOR, colours[i-1]);
             }else{
                 button[i].fillBrush = button[i].graphics.newBrush(button[i].graphics.BrushType.SOLID_COLOR, [0.4, 0.4, 0.4, 1]);
@@ -280,7 +280,106 @@ function myScript(thisObj){
                 }
             }
         }  
-        
+    
+    
+    
+    
+                   for(j = 0; j < textArray.length; j++){
+                
+                
+                          if(textArray[j].search('"Adjustment Label Index 2" =') != -1){
+                                    myLine = textArray[j];
+                                    myLine1 = myLine.split('" = ')[1];
+                                     adjustmentLabel = myLine1.charAt(1); 
+                              }
+                              
+                 
+                          if(textArray[j].search('"Audio Label Index 2" =') != -1){
+                                    myLine = textArray[j];
+                                    myLine1 = myLine.split('" = ')[1];
+                                    audioLabel = myLine1.charAt(1); 
+                              }
+                 
+                          if(textArray[j].search('"Camera Label Index 2" =') != -1){
+                                    myLine = textArray[j];
+                                    myLine1 = myLine.split('" = ')[1];
+                                     cameraLabel = myLine1.charAt(1); 
+                              }
+                              
+                
+                          if(textArray[j].search('"Comp Label Index 2" =') != -1){
+                                    myLine = textArray[j];
+                                    myLine1 = myLine.split('" = ')[1];
+                                     compLabel = myLine1.charAt(1); 
+                              }
+                              
+                 
+                          if(textArray[j].search('"Folder Label Index 2" =') != -1){
+                                    myLine = textArray[j];
+                                    myLine1 = myLine.split('" = ')[1];
+                                     folderLabel = myLine1.charAt(1); 
+                              }
+                 
+                          if(textArray[j].search('"Light Label Index 2" =') != -1){
+                                    myLine = textArray[j];
+                                    myLine1 = myLine.split('" = ')[1];
+                                     lightLabel = myLine1.charAt(1); 
+                              }
+                          
+                           if(textArray[j].search('"Null Label Index" =') != -1){
+                                    myLine = textArray[j];
+                                    myLine1 = myLine.split('" = ')[1];
+                                    nullLabel = myLine1.charAt(1); 
+                              }
+                              
+                 
+                          if(textArray[j].search('"Shape Label Index 2" =') != -1){
+                                    myLine = textArray[j];
+                                    myLine1 = myLine.split('" = ')[1];
+                                    shapeLabel = myLine1.charAt(1); 
+                              }
+                 
+                          if(textArray[j].search('"Solid Label Index 2" =') != -1){
+                                    myLine = textArray[j];
+                                    myLine1 = myLine.split('" = ')[1];
+                                     solidLabel = myLine1.charAt(1); 
+                              }
+                              
+                
+                          if(textArray[j].search('"Still Label Index 2" =') != -1){
+                                    myLine = textArray[j];
+                                    myLine1 = myLine.split('" = ')[1];
+                                     stillLabel = myLine1.charAt(1); 
+                              }
+                              
+                 
+                          if(textArray[j].search('"Text Label Index"') != -1){
+                                    myLine = textArray[j];
+                                    myLine1 = myLine.split('" = ')[1];
+                                    textLabel = myLine1.charAt(1); 
+                                    
+                              }
+                 
+                          if(textArray[j].search('"Video Label Index 2" =') != -1){
+                                    myLine = textArray[j];
+                                    myLine1 = myLine.split('" = ')[1];
+                                    videoLabel = myLine1.charAt(1); 
+                              }
+                                                                                           
+                
+                        }    
+    
+/*
+    alert(videoLabel);
+    alert(adjustmentLabel);
+    alert(cameraLabel); 
+    alert(compLabel);
+    alert(folderLabel);
+    alert(shapeLabel);
+    alert(solidLabel);
+    alert(nullLabel); 
+     alert(textLabel);       
+          alert(audioLabel);*/
         //FIX NONE TOOLTIP
         button[0].helpTip = '"None"';
 
@@ -302,7 +401,7 @@ function myScript(thisObj){
         button[14].onClick =  onTabClicked14;
         button[15].onClick =  onTabClicked15;
         button[16].onClick =  onTabClicked16;
-
+        button[17].onClick =  onTabClicked17;
         myPanel.layout.layout(true);
         return myPanel;
     }
@@ -393,6 +492,199 @@ function myScript(thisObj){
         runMe(); 
     }
 
+    function onTabClicked17(){
+                                    var comp=app.project.activeItem;   
+                            var activeItem = app.project.activeItem;
+                            
+                            
+                            
+                            
+if (activeItem != null && activeItem instanceof CompItem) {}else{
+               
+             
+               
+               var mySelectedItems = app.project.selection; 
+           
+           
+           for (var i = 0; i <= mySelectedItems.length; i++){
+           
+                layer = mySelectedItems[i]; 
+
+                
+                if(layer instanceof FootageItem){
+                    layer.label = Number(videoLabel); 
+                    }
+                
+                  
+                if(layer instanceof CompItem){
+                    layer.label = Number(compLabel); 
+                    }              
+                
+                 if(layer instanceof FolderItem){
+                    layer.label = Number(folderLabel); 
+                    }                             
+                
+                
+               
+            }
+    
+    }                            
+                            
+                            
+                            
+                            
+                            
+                            if (activeItem != null && activeItem instanceof CompItem) {
+                                var layerNum = app.project.activeItem.selectedLayers.length; 
+                                }else{
+                                    var layerNum = app.project.selection.length; 
+                                    
+                                    }
+                                
+                        for(b = 0; b < layerNum; b++){             
+                            
+                            if(activeItem instanceof CompItem){
+                            layer = app.project.activeItem.selectedLayers[b];
+                            }else{
+                                layer = app.project.selection[b];
+                                }
+                            
+ 
+
+if (layer instanceof AVLayer)
+{
+    if (layer.property("sourceText") === null)   // (For AE 6.5) Text layers are AVLayer, so filter out
+    {
+        // Layer is an AV layer
+
+        if (!layer.hasAudio)
+        {
+            layer.label = Number(videoLabel); 
+        }
+
+        if (!layer.hasVideo)
+        {
+            layer.label = Number(videoLabel); 
+
+        }
+
+        if (layer.source instanceof FootageItem)
+        {
+            if (layer.source.mainSource instanceof PlaceholderSource)
+            {
+                layer.label = Number(solidLabel); 
+
+            }
+            if (layer.source.mainSource instanceof SolidSource)
+            {
+                layer.label = Number(solidLabel); 
+
+            }
+        }
+
+        if (layer.adjustmentLayer)
+        {
+                layer.label = Number(adjustmentLabel); 
+
+        }
+
+        if (layer.nullLayer)
+        {
+                layer.label = Number(nullLabel); 
+
+        }
+
+        if (layer.source instanceof CompItem)
+        {
+                layer.label = Number(compLabel); 
+
+        }
+    }
+
+
+
+    if (layer.guideLayer)
+    {
+        // AV Layer is a guide layer
+    }
+
+}
+
+// Checking for a text layer
+if (layer.property("sourceText") !== null)       // Or "Source Text", "text", or "Text"
+{
+                    layer.label = Number(textLabel); 
+
+}
+
+
+// Checking for a light layer
+if (layer.property("intensity") !== null)        // Or "Intensity", "color", or "Color"
+{
+                    layer.label = Number(lightLabel); 
+
+}
+
+// Checking for a camera layer
+if (layer.property("zoom") !== null)             // Or "Zoom" or other values
+{
+                    layer.label = Number(cameraLabel); 
+
+}
+
+
+
+// Checking for a text layer (as of After Effects 7.0)
+if (layer instanceof TextLayer)
+{
+                    layer.label = Number(textLabel); 
+
+}
+
+
+// Checking for a light layer (as of After Effects 7.0)
+if (layer instanceof LightLayer)
+{
+                    layer.label = Number(lightLabel); 
+
+}
+
+// Checking for a camera layer (as of After Effects 7.0)
+if (layer instanceof CameraLayer)
+{
+          layer.label = Number(cameraLabel); 
+
+}
+if (layer instanceof ShapeLayer)
+{
+          layer.label = Number(shapeLabel); 
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+////
+        
+        }
+
+
+
+
+
+    }
+
     var myScriptPal = myScript_buildUI(thisObj);
 
     if (myScriptPal != null && myScriptPal instanceof Window){
@@ -418,13 +710,21 @@ if (activeItem != null && activeItem instanceof CompItem) {
     }
 }else{
     
-            var mySelectedItems = [];
-            for (var i = 1; i <= app.project.numItems; i++){
-            if(app.project.items[i].selected)
-                app.project.items[i].label = label; 
+            var mySelectedItems = app.project.selection; 
+            for (var i = 0; i <= mySelectedItems.length; i++){
+           
+                mySelectedItems[i].label = label; 
             }
         
 }
+
+if(app.project.selection.length == 1){
+    app.project.selection[0].label = label; 
+    }
+
+
+
+
         
 	myPanel.parent.show();
     myPanel.update();
