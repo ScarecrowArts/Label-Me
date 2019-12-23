@@ -22,7 +22,7 @@ function myScript(thisObj){
     function myScript_buildUI(thisObj){
         myPanel = (thisObj instanceof Panel) ? thisObj : new Window("palette", "labelME", [100, 100, 12, 120], {resizeable:false});
         mySaveFilePath = "~/Documents/";
-    
+        app.preferences.saveToDisk(); 
         var file = File(mySaveFilePath + "Path" + ".txt");
         
 
@@ -34,7 +34,7 @@ function myScript(thisObj){
                 macPath1 = userData .toString();
                 macPath = macPath1.substring(0,macPath1.lastIndexOf("/")+1);
 
-                prefFilePath = macPath + "Preferences/Adobe/After Effects/"+ version + "/Adobe After Effects " +  version + " Prefs.txt";
+                prefFilePath = macPath + "Preferences/Adobe/After Effects/"+ version + "/Adobe After Effects " +  version + " Prefs-indep-general.txt";
 
     }
             prefFile = File([prefFilePath]); 
