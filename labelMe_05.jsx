@@ -1,6 +1,6 @@
 ﻿//  Copyright (c) 2020 Scarecrow Arts
 //  http://www.scarecrowarts.com
-//  Version 0.04
+//  Version 0.05
 
 var scriptPath = File($.fileName).parent.fsName;
 var file = File;
@@ -16,65 +16,27 @@ if ($.os.indexOf("Windows") != -1 ){
     win = 1;       
 }
 
-
-
 function myScript(thisObj){
     function myScript_buildUI(thisObj){
         myPanel = (thisObj instanceof Panel) ? thisObj : new Window("palette", "labelME", [100, 100, 12, 120], {resizeable:false});
         mySaveFilePath = "~/Documents/";
         app.preferences.saveToDisk(); 
         var file = File(mySaveFilePath + "Path" + ".txt");
-        
 
-            userData = Folder.userData;  
-            version = app.version.substring(0,4); 
-            if(win == 1){
+        userData = Folder.userData;  
+        version = app.version.substring(0,4); 
+        
+        if(win == 1){
             prefFilePath = userData .toString()+ "/Adobe/After Effects/"+ version + "/Adobe After Effects " +  version + " Prefs-indep-general.txt";
-}else{
-                macPath1 = userData .toString();
-                macPath = macPath1.substring(0,macPath1.lastIndexOf("/")+1);
+        }else{
+            macPath1 = userData .toString();
+            macPath = macPath1.substring(0,macPath1.lastIndexOf("/")+1);
 
-                prefFilePath = macPath + "Preferences/Adobe/After Effects/"+ version + "/Adobe After Effects " +  version + " Prefs-indep-general.txt";
-
-    }
-            prefFile = File([prefFilePath]); 
- 
-        
-        
-    /*   
-        if (file.exists){
-            file.open("r");
-            prefFilePath = file.readln();
-            file.close(); 
-            prefFile = File([prefFilePath]); 
-            
-        }else{      
-            //prefFile = file.openDlg("Open a file", "Acceptable Files:*.txt,*.json,*xml");
-            username = prompt("Username","scarecrow");
-            version = prompt("AE Version",17); 
-            prefFilePath = "/Users/" + username + "/AppData/Roaming/Adobe/After Effects/"+ version + ".0/Adobe After Effects 17.0 Prefs-indep-general.txt";
-            prefFile = File([prefFilePath]); 
-            logInfo(prefFilePath); 
-            dumpLog();
-            
-            function logInfo(Txt){
-                logData += String(Txt);
-            }
-    
-            function dumpLog(){
-                var file = new File(mySaveFilePath + "Path" + ".txt");
-        
-                //MAGIC
-                file.open("e", "TEXT", "????"); 
-                file.seek(0,2);
-                $.os.search(/windows/i)  != -1 ? file.lineFeed = 'windows'  : file.lineFeed = 'macintosh';  
-                file.write(logData); 
-                file.close();
-                logData = "";
-            }
+            prefFilePath = macPath + "Preferences/Adobe/After Effects/"+ version + "/Adobe After Effects " +  version + " Prefs-indep-general.txt";
         }
-       */
-       var textArray = readTxt();
+        
+        prefFile = File([prefFilePath]); 
+        var textArray = readTxt();
         
         function readTxt() {
             var txtArray = [];
@@ -111,6 +73,7 @@ function myScript(thisObj){
         myPanel.grp.padding.left = 0;
         myPanel.grp.padding.right = 0;
         
+        //DRAW GUI ICONS
         function customDraw(){ 
             with( this ) {
                 graphics.drawOSControl();
@@ -121,11 +84,13 @@ function myScript(thisObj){
             }
         }
     
+        //CONVERT SAVE FILE TO HEX CODE
         function prefCodeToHexCode(str){
             return str.replace(/"([^"]+)"/g, function(u, code){
                 var result = "";
+                
                 for (var i=0; i<code.length; i++){result += code.charCodeAt(i).toString(16);};
-                return result;
+                    return result;
                 });
             };
         
@@ -238,13 +203,13 @@ function myScript(thisObj){
         //Different versions of AE store this differently
         is5 = 0;
         is7 = 0; 
-                    for(j = 0; j < textArray.length; j++){
-                        if(textArray[j] == '["Label Preference Text Section 5"]')
-                        is5 = 1;
-                       if(textArray[j] == '["Label Preference Text Section 7"]')
-                        is7 = 1; 
-                        }
         
+        for(j = 0; j < textArray.length; j++){
+            if(textArray[j] == '["Label Preference Text Section 5"]')
+                is5 = 1;
+            if(textArray[j] == '["Label Preference Text Section 7"]')
+                is7 = 1; 
+            }
         
         //TOOL TIPS
         for (var i = 1; i <= 16; i++){      
@@ -265,13 +230,10 @@ function myScript(thisObj){
                         run = 1; 
                     }else{
                         if(hasChecked2 == 0){
-                                myLine = textArray[j];
+                            myLine = textArray[j];
                                 
                             if(textArray[j-i] == '["Label Preference Text Section 7"]' || is7 == 0){
-   
-                            myLine1 = myLine.split('" = ')[1];
-
-                                
+                                myLine1 = myLine.split('" = ')[1];
                                 button[1].helpTip = myLine1; 
                                 hasChecked2 = 1; 
                             }       
@@ -280,108 +242,82 @@ function myScript(thisObj){
                 }
             }
         }  
-    
-    
-    
-    
-                   for(j = 0; j < textArray.length; j++){
-                
-                
-                          if(textArray[j].search('"Adjustment Label Index 2" =') != -1){
-                                    myLine = textArray[j];
-                                    myLine1 = myLine.split('" = ')[1];
-                                     adjustmentLabel = myLine1.substr(1, myLine1.length-2); 
-                              }
-                              
-                 
-                          if(textArray[j].search('"Audio Label Index 2" =') != -1){
-                                    myLine = textArray[j];
-                                    myLine1 = myLine.split('" = ')[1];
-                                    audioLabel = myLine1.substr(1, myLine1.length-2); 
-                              }
-                 
-                          if(textArray[j].search('"Camera Label Index 2" =') != -1){
-                                    myLine = textArray[j];
-                                    myLine1 = myLine.split('" = ')[1];
-                                     cameraLabel = myLine1.substr(1, myLine1.length-2); 
-                              }
-                              
-                
-                          if(textArray[j].search('"Comp Label Index 2" =') != -1){
-                                    myLine = textArray[j];
-                                    myLine1 = myLine.split('" = ')[1];
-                                     compLabel = myLine1.substr(1, myLine1.length-2); 
-                              }
-                              
-                 
-                          if(textArray[j].search('"Folder Label Index 2" =') != -1){
-                                    myLine = textArray[j];
-                                    myLine1 = myLine.split('" = ')[1];
-                                     folderLabel = myLine1.substr(1, myLine1.length-2); 
-                              }
-                 
-                          if(textArray[j].search('"Light Label Index 2" =') != -1){
-                                    myLine = textArray[j];
-                                    myLine1 = myLine.split('" = ')[1];
-                                     lightLabel = myLine1.substr(1, myLine1.length-2); 
-                              }
-                          
-                           if(textArray[j].search('"Null Label Index" =') != -1){
-                                    myLine = textArray[j];
-                                    myLine1 = myLine.split('" = ')[1];
-                                    nullLabel = myLine1.substr(1, myLine1.length-2); 
-                              }
-                              
-                 
-                          if(textArray[j].search('"Shape Label Index 2" =') != -1){
-                                    myLine = textArray[j];
-                                    myLine1 = myLine.split('" = ')[1];
-                                    shapeLabel = myLine1.substr(1, myLine1.length-2);  
-                              }
-                 
-                          if(textArray[j].search('"Solid Label Index 2" =') != -1){
-                                    myLine = textArray[j];
-                                    myLine1 = myLine.split('" = ')[1];
-                                     solidLabel = myLine1.substr(1, myLine1.length-2); 
-                              }
-                              
-                
-                          if(textArray[j].search('"Still Label Index 2" =') != -1){
-                                    myLine = textArray[j];
-                                    myLine1 = myLine.split('" = ')[1];
-                                     stillLabel = myLine1.substr(1, myLine1.length-2); 
-                              }
-                              
-                 
-                          if(textArray[j].search('"Text Label Index"') != -1){
-                                    myLine = textArray[j];
-                                    myLine1 = myLine.split('" = ')[1];
-                                    textLabel = myLine1.substr(1, myLine1.length-2); 
-                                    
-                              }
-                 
-                          if(textArray[j].search('"Video Label Index 2" =') != -1){
-                                    myLine = textArray[j];
-                                    myLine1 = myLine.split('" = ')[1];
-                                    videoLabel = myLine1.substr(1, myLine1.length-2); 
-                              }
-                                                                                           
-                
-                        }    
 
-/*
-    alert(videoLabel);
-    alert(adjustmentLabel);
-    alert(cameraLabel); 
-    alert(compLabel);
-    alert(folderLabel);
-    alert(shapeLabel);
-    alert(solidLabel);
-    alert(nullLabel); 
-     alert(textLabel);       
-          alert(audioLabel);*/
+        for(j = 0; j < textArray.length; j++){
+            if(textArray[j].search('"Adjustment Label Index 2" =') != -1){
+                myLine = textArray[j];
+                myLine1 = myLine.split('" = ')[1];
+                adjustmentLabel = myLine1.substr(1, myLine1.length-2); 
+            }
+     
+            if(textArray[j].search('"Audio Label Index 2" =') != -1){
+                myLine = textArray[j];
+                myLine1 = myLine.split('" = ')[1];
+                audioLabel = myLine1.substr(1, myLine1.length-2); 
+            }
+                 
+            if(textArray[j].search('"Camera Label Index 2" =') != -1){
+                myLine = textArray[j];
+                myLine1 = myLine.split('" = ')[1];
+                cameraLabel = myLine1.substr(1, myLine1.length-2); 
+            }
+ 
+            if(textArray[j].search('"Comp Label Index 2" =') != -1){
+                myLine = textArray[j];
+                myLine1 = myLine.split('" = ')[1];
+                compLabel = myLine1.substr(1, myLine1.length-2); 
+            }
+  
+            if(textArray[j].search('"Folder Label Index 2" =') != -1){
+                myLine = textArray[j];
+                myLine1 = myLine.split('" = ')[1];
+                folderLabel = myLine1.substr(1, myLine1.length-2); 
+            }
+                 
+            if(textArray[j].search('"Light Label Index 2" =') != -1){
+                myLine = textArray[j];
+                myLine1 = myLine.split('" = ')[1];
+                lightLabel = myLine1.substr(1, myLine1.length-2); 
+            }
+                          
+            if(textArray[j].search('"Null Label Index" =') != -1){
+                myLine = textArray[j];
+                myLine1 = myLine.split('" = ')[1];
+                nullLabel = myLine1.substr(1, myLine1.length-2); 
+            }
+                 
+            if(textArray[j].search('"Shape Label Index 2" =') != -1){
+                myLine = textArray[j];
+                myLine1 = myLine.split('" = ')[1];
+                shapeLabel = myLine1.substr(1, myLine1.length-2);  
+            }
+                 
+            if(textArray[j].search('"Solid Label Index 2" =') != -1){
+                myLine = textArray[j];
+                myLine1 = myLine.split('" = ')[1];
+                solidLabel = myLine1.substr(1, myLine1.length-2); 
+            }
+
+            if(textArray[j].search('"Still Label Index 2" =') != -1){
+                myLine = textArray[j];
+                myLine1 = myLine.split('" = ')[1];
+                stillLabel = myLine1.substr(1, myLine1.length-2); 
+            }
+
+            if(textArray[j].search('"Text Label Index"') != -1){
+                myLine = textArray[j];
+                myLine1 = myLine.split('" = ')[1];
+                textLabel = myLine1.substr(1, myLine1.length-2);                  
+            }
+                 
+            if(textArray[j].search('"Video Label Index 2" =') != -1){
+                myLine = textArray[j];
+                myLine1 = myLine.split('" = ')[1];
+                videoLabel = myLine1.substr(1, myLine1.length-2); 
+            }
+        }    
       
-        //FIX NONE TOOLTIP
+        //FIX NONE/DEFAULT TOOLTIP
         button[0].helpTip = '"None"';
         button[17].helpTip = '"Return to Default"';
 
@@ -495,227 +431,148 @@ function myScript(thisObj){
     }
 
     function onTabClicked17(){
-                                    var comp=app.project.activeItem;   
-                            var activeItem = app.project.activeItem;
-                            
-                            
-                            
-                            
-if (activeItem != null && activeItem instanceof CompItem) {}else{
-               
-             
-               
-               var mySelectedItems = app.project.selection; 
-           
-           
-           for (var i = 0; i <= mySelectedItems.length; i++){
-           
+        var comp=app.project.activeItem;   
+        var activeItem = app.project.activeItem;
+          
+        if (activeItem != null && activeItem instanceof CompItem) {}else{
+            var mySelectedItems = app.project.selection; 
+
+            for (var i = 0; i <= mySelectedItems.length; i++){
                 layer = mySelectedItems[i]; 
 
-                
                 if(layer instanceof FootageItem){
-                    layer.label = Number(videoLabel); 
+                    layer.label = Number(videoLabel);
+                    
                     if(layer.name.search('Adjustment Layer ') != -1){
-                            layer.label = Number(adjustmentLabel);  
-                            }
-                        
-                        
-                        if(layer.name.search(' Solid ') != -1){
-                            layer.label = Number(solidLabel); 
-                            }
-                        
-                      if(layer.name.search('Null ') != -1){
-                              layer.label = Number(nullLabel);                           
-                            }
+                        layer.label = Number(adjustmentLabel);  
                     }
-                
-                  
+
+                    if(layer.name.search(' Solid ') != -1){
+                        layer.label = Number(solidLabel); 
+                    }
+                            
+                    if(layer.name.search('Null ') != -1){
+                        layer.label = Number(nullLabel);                           
+                    }
+                }
+
                 if(layer instanceof CompItem){
                     layer.label = Number(compLabel); 
-                    }              
+                }              
                 
-                 if(layer instanceof FolderItem){
+                if(layer instanceof FolderItem){
                     layer.label = Number(folderLabel); 
-                    }                             
-                
-                
-               
+                }                             
             }
-    
-    }                            
+        }                            
        
- if(app.project.selection.length == 1){
-     layer = app.project.selection[0]; 
+        if(app.project.selection.length == 1){
+            layer = app.project.selection[0]; 
 
-                    if(layer instanceof FootageItem){
-                    layer.label = Number(videoLabel); 
-                    if(layer.name.search('Adjustment Layer ') != -1){
-                            layer.label = Number(adjustmentLabel);  
-                            }
-                        
-                        
-                        if(layer.name.search(' Solid ') != -1){
-                            layer.label = Number(solidLabel); 
-                            }
-                        
-                      if(layer.name.search('Null ') != -1){
-                              layer.label = Number(nullLabel);                           
-                            }
-                    }
+            if(layer instanceof FootageItem){
+                layer.label = Number(videoLabel); 
                 
-                  
-                if(layer instanceof CompItem){
-                    layer.label = Number(compLabel); 
-                    }              
-                
-                 if(layer instanceof FolderItem){
-                    layer.label = Number(folderLabel); 
-                    }               
-    }
-                           
-                            
-                            
-                            
-                            if (activeItem != null && activeItem instanceof CompItem) {
-                                var layerNum = app.project.activeItem.selectedLayers.length; 
-                                }else{
-                                    var layerNum = app.project.selection.length; 
-                                    
-                                    }
-                                
-                        for(b = 0; b < layerNum; b++){             
-                                 //alert(layer.typeName); 
-                            if(activeItem instanceof CompItem){
-                            layer = app.project.activeItem.selectedLayers[b];
-                            }else{
-                                layer = app.project.selection[b];
-                                }
-                            
- 
-
-if (layer instanceof AVLayer)
-{
-
-        // Layer is an AV layer
-
-            layer.label = Number(videoLabel); 
-
-
-        if (layer.source instanceof FootageItem)
-        {
-            if (layer.source.mainSource instanceof PlaceholderSource)
-            {
-                layer.label = Number(solidLabel); 
-
-            }
-            if (layer.source.mainSource instanceof SolidSource)
-            {
-                layer.label = Number(solidLabel); 
-
-            }
-        }
-
-        if (layer.adjustmentLayer)
-        {
-                layer.label = Number(adjustmentLabel); 
-
-        }
-
-        if (layer.nullLayer)
-        {
-                layer.label = Number(nullLabel); 
-
-        }
-
-        if (layer.source instanceof CompItem)
-        {
-                layer.label = Number(compLabel); 
-
-        }
-    
-
-
-
-    if (layer.guideLayer)
-    {
-        // AV Layer is a guide layer
-    }
-
-}
-
-// Checking for a text layer
-if (layer.property("sourceText") !== null)       // Or "Source Text", "text", or "Text"
-{
-                    layer.label = Number(textLabel); 
-
-}
-
-
-// Checking for a light layer
-if (layer.property("intensity") !== null)        // Or "Intensity", "color", or "Color"
-{
-                    layer.label = Number(lightLabel); 
-
-}
-
-// Checking for a camera layer
-if (layer.property("zoom") !== null)             // Or "Zoom" or other values
-{
-                    layer.label = Number(cameraLabel); 
-
-}
-
-
-
-// Checking for a text layer (as of After Effects 7.0)
-if (layer instanceof TextLayer)
-{
-                    layer.label = Number(textLabel); 
-
-}
-
-
-// Checking for a light layer (as of After Effects 7.0)
-if (layer instanceof LightLayer)
-{
-                    layer.label = Number(lightLabel); 
-
-}
-
-// Checking for a camera layer (as of After Effects 7.0)
-if (layer instanceof CameraLayer)
-{
-          layer.label = Number(cameraLabel); 
-
-}
-if (layer instanceof ShapeLayer)
-{
-          layer.label = Number(shapeLabel); 
-
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-////
+                if(layer.name.search('Adjustment Layer ') != -1){
+                    layer.label = Number(adjustmentLabel);  
+                }
         
+                if(layer.name.search(' Solid ') != -1){
+                    layer.label = Number(solidLabel); 
+                }
+                        
+                if(layer.name.search('Null ') != -1){
+                    layer.label = Number(nullLabel);                           
+                }
+            }
+                  
+            if(layer instanceof CompItem){
+                layer.label = Number(compLabel); 
+            }              
+                
+            if(layer instanceof FolderItem){
+                layer.label = Number(folderLabel); 
+            }               
         }
 
+        if (activeItem != null && activeItem instanceof CompItem) {
+            var layerNum = app.project.activeItem.selectedLayers.length; 
+        }else{
+            var layerNum = app.project.selection.length;                     
+        }
+                                    
+        for(b = 0; b < layerNum; b++){             
+            //alert(layer.typeName); 
+            if(activeItem instanceof CompItem){
+                layer = app.project.activeItem.selectedLayers[b];
+            }else{
+                layer = app.project.selection[b];
+            }
 
+            if (layer instanceof AVLayer){
+                // Layer is an AV layer
+                layer.label = Number(videoLabel); 
 
+                if (layer.source instanceof FootageItem){
+                    if (layer.source.mainSource instanceof PlaceholderSource){
+                        layer.label = Number(solidLabel); 
+                    }
+              
+                    if (layer.source.mainSource instanceof SolidSource){
+                        layer.label = Number(solidLabel); 
+                    }
+                }
 
+                if (layer.adjustmentLayer){
+                    layer.label = Number(adjustmentLabel); 
+                }
 
+                if (layer.nullLayer){
+                    layer.label = Number(nullLabel); 
+                }
+
+                if (layer.source instanceof CompItem){
+                    layer.label = Number(compLabel); 
+                }
+        
+                if (layer.guideLayer){
+                    // AV Layer is a guide layer
+                }
+            }
+
+            // Checking for a text layer
+            if (layer.property("sourceText") !== null){// Or "Source Text", "text", or "Text"
+                layer.label = Number(textLabel); 
+            }
+
+            // Checking for a light layer
+            if (layer.property("intensity") !== null){// Or "Intensity", "color", or "Color"
+                layer.label = Number(lightLabel); 
+            }
+
+            // Checking for a camera layer
+            if (layer.property("zoom") !== null){// Or "Zoom" or other values
+                layer.label = Number(cameraLabel); 
+            }
+
+            // Checking for a text layer (as of After Effects 7.0)
+            if (layer instanceof TextLayer){
+                layer.label = Number(textLabel);
+            }
+
+            // Checking for a light layer (as of After Effects 7.0)
+            if (layer instanceof LightLayer){
+                layer.label = Number(lightLabel);
+            }
+
+            // Checking for a camera layer (as of After Effects 7.0)
+            if (layer instanceof CameraLayer){
+                layer.label = Number(cameraLabel); 
+            }
+        
+            if (layer instanceof ShapeLayer){
+                layer.label = Number(shapeLabel);
+            }
+        }
     }
 
     var myScriptPal = myScript_buildUI(thisObj);
@@ -727,39 +584,31 @@ if (layer instanceof ShapeLayer)
 }
 
 function runMe(){
-
     var comp=app.project.activeItem;   
     var activeItem = app.project.activeItem;
 
-
     app.beginUndoGroup("labelME");
-if (activeItem != null && activeItem instanceof CompItem) {
     
-    var layerNum = app.project.activeItem.selectedLayers.length; 
-    for(b = 0; b < layerNum; b++){             
-        layer = app.project.activeItem.selectedLayers[b];
-        layer.label = label; 
+    if (activeItem != null && activeItem instanceof CompItem){
+        var layerNum = app.project.activeItem.selectedLayers.length; 
         
-    }
-}else{
-    
-            var mySelectedItems = app.project.selection; 
-            for (var i = 0; i <= mySelectedItems.length; i++){
-           
-                mySelectedItems[i].label = label; 
-            }
+        for(b = 0; b < layerNum; b++){             
+            layer = app.project.activeItem.selectedLayers[b];
+            layer.label = label;  
+        }
+    }else{
+        var mySelectedItems = app.project.selection; 
         
-}
-
-if(app.project.selection.length == 1){
-    app.project.selection[0].label = label; 
+        for (var i = 0; i <= mySelectedItems.length; i++){
+            mySelectedItems[i].label = label; 
+        }   
     }
 
+    if(app.project.selection.length == 1){
+        app.project.selection[0].label = label; 
+    }
 
-
-
-        
-	myPanel.parent.show();
+    myPanel.parent.show();
     myPanel.update();
 	
     app.endUndoGroup();
