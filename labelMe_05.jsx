@@ -290,85 +290,85 @@ function myScript(thisObj){
                           if(textArray[j].search('"Adjustment Label Index 2" =') != -1){
                                     myLine = textArray[j];
                                     myLine1 = myLine.split('" = ')[1];
-                                     adjustmentLabel = myLine1.charAt(1); 
+                                     adjustmentLabel = myLine1.substr(1, myLine1.length-2); 
                               }
                               
                  
                           if(textArray[j].search('"Audio Label Index 2" =') != -1){
                                     myLine = textArray[j];
                                     myLine1 = myLine.split('" = ')[1];
-                                    audioLabel = myLine1.charAt(1); 
+                                    audioLabel = myLine1.substr(1, myLine1.length-2); 
                               }
                  
                           if(textArray[j].search('"Camera Label Index 2" =') != -1){
                                     myLine = textArray[j];
                                     myLine1 = myLine.split('" = ')[1];
-                                     cameraLabel = myLine1.charAt(1); 
+                                     cameraLabel = myLine1.substr(1, myLine1.length-2); 
                               }
                               
                 
                           if(textArray[j].search('"Comp Label Index 2" =') != -1){
                                     myLine = textArray[j];
                                     myLine1 = myLine.split('" = ')[1];
-                                     compLabel = myLine1.charAt(1); 
+                                     compLabel = myLine1.substr(1, myLine1.length-2); 
                               }
                               
                  
                           if(textArray[j].search('"Folder Label Index 2" =') != -1){
                                     myLine = textArray[j];
                                     myLine1 = myLine.split('" = ')[1];
-                                     folderLabel = myLine1.charAt(1); 
+                                     folderLabel = myLine1.substr(1, myLine1.length-2); 
                               }
                  
                           if(textArray[j].search('"Light Label Index 2" =') != -1){
                                     myLine = textArray[j];
                                     myLine1 = myLine.split('" = ')[1];
-                                     lightLabel = myLine1.charAt(1); 
+                                     lightLabel = myLine1.substr(1, myLine1.length-2); 
                               }
                           
                            if(textArray[j].search('"Null Label Index" =') != -1){
                                     myLine = textArray[j];
                                     myLine1 = myLine.split('" = ')[1];
-                                    nullLabel = myLine1.charAt(1); 
+                                    nullLabel = myLine1.substr(1, myLine1.length-2); 
                               }
                               
                  
                           if(textArray[j].search('"Shape Label Index 2" =') != -1){
                                     myLine = textArray[j];
                                     myLine1 = myLine.split('" = ')[1];
-                                    shapeLabel = myLine1.charAt(1); 
+                                    shapeLabel = myLine1.substr(1, myLine1.length-2);  
                               }
                  
                           if(textArray[j].search('"Solid Label Index 2" =') != -1){
                                     myLine = textArray[j];
                                     myLine1 = myLine.split('" = ')[1];
-                                     solidLabel = myLine1.charAt(1); 
+                                     solidLabel = myLine1.substr(1, myLine1.length-2); 
                               }
                               
                 
                           if(textArray[j].search('"Still Label Index 2" =') != -1){
                                     myLine = textArray[j];
                                     myLine1 = myLine.split('" = ')[1];
-                                     stillLabel = myLine1.charAt(1); 
+                                     stillLabel = myLine1.substr(1, myLine1.length-2); 
                               }
                               
                  
                           if(textArray[j].search('"Text Label Index"') != -1){
                                     myLine = textArray[j];
                                     myLine1 = myLine.split('" = ')[1];
-                                    textLabel = myLine1.charAt(1); 
+                                    textLabel = myLine1.substr(1, myLine1.length-2); 
                                     
                               }
                  
                           if(textArray[j].search('"Video Label Index 2" =') != -1){
                                     myLine = textArray[j];
                                     myLine1 = myLine.split('" = ')[1];
-                                    videoLabel = myLine1.charAt(1); 
+                                    videoLabel = myLine1.substr(1, myLine1.length-2); 
                               }
                                                                                            
                 
                         }    
-    
+
 /*
     alert(videoLabel);
     alert(adjustmentLabel);
@@ -553,8 +553,7 @@ if (activeItem != null && activeItem instanceof CompItem) {}else{
 
 if (layer instanceof AVLayer)
 {
-    if (layer.property("sourceText") === null)   // (For AE 6.5) Text layers are AVLayer, so filter out
-    {
+
         // Layer is an AV layer
 
         if (!layer.hasAudio)
@@ -599,7 +598,7 @@ if (layer instanceof AVLayer)
                 layer.label = Number(compLabel); 
 
         }
-    }
+    
 
 
 
