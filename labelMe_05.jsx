@@ -9,7 +9,6 @@ var textArray = [];
 var win = 0; 
 var myPanel;
 var label; 
-var img = [];
 var button = [];
 
 if ($.os.indexOf("Windows") != -1 ){
@@ -196,7 +195,12 @@ function myScript(thisObj){
             }
 
             button[i].onDraw = customDraw;
-        }        
+        }
+        
+        //RE-COLOR DEFAULT ICON
+        button[17].fillBrush = button[17].graphics.newBrush(button[17].graphics.BrushType.SOLID_COLOR, [1, 1, 1, 1]);
+        //button[17].fillBrush = button[17].graphics.newBrush(button[17].graphics.drawString("X", button[17].graphics.PenType.THEME_COLOR, 0, 0));
+        button[17].onDraw = customDraw;
         
         hasChecked2 = 0;
         
