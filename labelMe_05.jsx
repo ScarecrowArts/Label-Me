@@ -380,8 +380,10 @@ function myScript(thisObj){
     alert(nullLabel); 
      alert(textLabel);       
           alert(audioLabel);*/
+      
         //FIX NONE TOOLTIP
         button[0].helpTip = '"None"';
+        button[17].helpTip = '"Return to Default"';
 
         //DO THE THING
         button[0].onClick =  onTabClicked00;
@@ -513,6 +515,18 @@ if (activeItem != null && activeItem instanceof CompItem) {}else{
                 
                 if(layer instanceof FootageItem){
                     layer.label = Number(videoLabel); 
+                    if(layer.name.search('Adjustment Layer ') != -1){
+                            layer.label = Number(adjustmentLabel);  
+                            }
+                        
+                        
+                        if(layer.name.search(' Solid ') != -1){
+                            layer.label = Number(solidLabel); 
+                            }
+                        
+                      if(layer.name.search('Null ') != -1){
+                              layer.label = Number(nullLabel);                           
+                            }
                     }
                 
                   
@@ -535,6 +549,18 @@ if (activeItem != null && activeItem instanceof CompItem) {}else{
 
                     if(layer instanceof FootageItem){
                     layer.label = Number(videoLabel); 
+                    if(layer.name.search('Adjustment Layer ') != -1){
+                            layer.label = Number(adjustmentLabel);  
+                            }
+                        
+                        
+                        if(layer.name.search(' Solid ') != -1){
+                            layer.label = Number(solidLabel); 
+                            }
+                        
+                      if(layer.name.search('Null ') != -1){
+                              layer.label = Number(nullLabel);                           
+                            }
                     }
                 
                   
@@ -558,7 +584,7 @@ if (activeItem != null && activeItem instanceof CompItem) {}else{
                                     }
                                 
                         for(b = 0; b < layerNum; b++){             
-                                 alert(layer.typeName); 
+                                 //alert(layer.typeName); 
                             if(activeItem instanceof CompItem){
                             layer = app.project.activeItem.selectedLayers[b];
                             }else{
@@ -572,16 +598,8 @@ if (layer instanceof AVLayer)
 
         // Layer is an AV layer
 
-        if (!layer.hasAudio)
-        {
-            layer.label = Number(videoLabel); 
-        }
-
-        if (!layer.hasVideo)
-        {
             layer.label = Number(videoLabel); 
 
-        }
 
         if (layer.source instanceof FootageItem)
         {
