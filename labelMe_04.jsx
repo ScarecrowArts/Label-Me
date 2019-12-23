@@ -14,7 +14,7 @@ var button = [];
 
 function myScript(thisObj){
     function myScript_buildUI(thisObj){
-        myPanel = (thisObj instanceof Panel) ? thisObj : new Window("palette", "labelME", [100, 100, 12, 560], {resizeable:false});
+        myPanel = (thisObj instanceof Panel) ? thisObj : new Window("palette", "labelME", [100, 100, 12, 120], {resizeable:false});
         mySaveFilePath = "~/Documents/";
 
         var file = File(mySaveFilePath + "Path" + ".txt");
