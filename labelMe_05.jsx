@@ -24,10 +24,11 @@ function myScript(thisObj){
         mySaveFilePath = "~/Documents/";
     
         var file = File(mySaveFilePath + "Path" + ".txt");
-        
+        alert(win); 
 
             userData = Folder.userData;  
             version = app.version.substring(0,4); 
+            
             if(win == 1){
             prefFilePath = userData .toString()+ "/Adobe/After Effects/"+ version + "/Adobe After Effects " +  version + " Prefs-indep-general.txt";
 }else{
@@ -36,6 +37,7 @@ function myScript(thisObj){
                 prefFilePath = macPath + "/Preferences/Adobe/After Effects/"+ version + "/Adobe After Effects " +  version + " Prefs-indep-general.txt";
                 alert(prefFilePath); 
     }
+
             prefFile = File([prefFilePath]); 
  
         
