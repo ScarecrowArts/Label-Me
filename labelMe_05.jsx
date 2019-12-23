@@ -1,10 +1,7 @@
 ﻿//  Copyright (c) 2020 Scarecrow Arts
 //  http://www.scarecrowarts.com
 //  Version 0.04
-                macPath1 = userData .toString();
-                macPath = macPath1.substring(0,macPath1.lastIndexOf("/")+1);
-                prefFilePath = macPath + "/Preferences/Adobe/After Effects/"+ version + "/Adobe After Effects " +  version + " Prefs-indep-general.txt";
-                alert(prefFilePath); 
+
 var scriptPath = File($.fileName).parent.fsName;
 var file = File;
 var prefFile = File;
@@ -27,20 +24,18 @@ function myScript(thisObj){
         mySaveFilePath = "~/Documents/";
     
         var file = File(mySaveFilePath + "Path" + ".txt");
-        alert(win); 
+        
 
             userData = Folder.userData;  
             version = app.version.substring(0,4); 
-            
             if(win == 1){
             prefFilePath = userData .toString()+ "/Adobe/After Effects/"+ version + "/Adobe After Effects " +  version + " Prefs-indep-general.txt";
 }else{
                 macPath1 = userData .toString();
                 macPath = macPath1.substring(0,macPath1.lastIndexOf("/")+1);
                 prefFilePath = macPath + "/Preferences/Adobe/After Effects/"+ version + "/Adobe After Effects " +  version + " Prefs-indep-general.txt";
-                alert(prefFilePath); 
+                
     }
-
             prefFile = File([prefFilePath]); 
  
         
