@@ -6,11 +6,17 @@ var scriptPath = File($.fileName).parent.fsName;
 var file = File;
 var prefFile = File;
 var textArray = [];
-
+var win = 0; 
 var myPanel;
 var label; 
 var img = [];
 var button = [];
+
+if ($.os.indexOf("Windows") != -1 ){
+    win = 1;       
+}
+
+
 
 function myScript(thisObj){
     function myScript_buildUI(thisObj){
@@ -22,9 +28,11 @@ function myScript(thisObj){
 
             userData = Folder.userData;  
             version = app.version.substring(0,4); 
-            
+            if(win == 1){
             prefFilePath = userData .toString()+ "/Adobe/After Effects/"+ version + "/Adobe After Effects " +  version + " Prefs-indep-general.txt";
-
+}else{
+                prefFilePath = "~/Library/Library/Preferences/Adobe/After Effects/"+ version + "/Adobe After Effects " +  version + " Prefs-indep-general.txt";
+    }
             prefFile = File([prefFilePath]); 
  
         
