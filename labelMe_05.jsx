@@ -458,6 +458,11 @@ function myScript(thisObj){
                     if(layer.name.search('Null ') != -1){
                         layer.label = Number(nullLabel);                           
                     }
+                        
+                     if(layer.hasAudio && !layer.hasVideo){
+                            layer.label = Number(audioLabel);      
+                     }
+                
                 }
 
                 if(layer instanceof CompItem){
@@ -487,6 +492,11 @@ function myScript(thisObj){
                 if(layer.name.search('Null ') != -1){
                     layer.label = Number(nullLabel);                           
                 }
+            
+               if(layer.hasAudio && !layer.hasVideo){
+                            layer.label = Number(audioLabel);      
+               }            
+            
             }
                   
             if(layer instanceof CompItem){
@@ -515,6 +525,10 @@ function myScript(thisObj){
             if (layer instanceof AVLayer){
                 // Layer is an AV layer
                 layer.label = Number(videoLabel); 
+                 if (!layer.hasVideo)
+                    {
+                        layer.label = Number(audioLabel); 
+                    }
 
                 if (layer.source instanceof FootageItem){
                     if (layer.source.mainSource instanceof PlaceholderSource){
