@@ -525,7 +525,7 @@ function myScript(thisObj){
             if (layer instanceof AVLayer){
                 // Layer is an AV layer
                 layer.label = Number(videoLabel); 
-                 if (!layer.hasVideo)
+                 if (!layer.hasVideo && layer.hasAudio)
                     {
                         layer.label = Number(audioLabel); 
                     }
