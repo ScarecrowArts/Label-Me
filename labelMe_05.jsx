@@ -198,9 +198,23 @@ function myScript(thisObj){
         }
         
         //RE-COLOR DEFAULT ICON
-        button[17].fillBrush = button[17].graphics.newBrush(button[17].graphics.BrushType.SOLID_COLOR, [1, 1, 1, 1]);
-        //button[17].fillBrush = button[17].graphics.newBrush(button[17].graphics.drawString("X", button[17].graphics.PenType.THEME_COLOR, 0, 0));
+        button[17].fillBrush = button[17].graphics.newBrush(button[17].graphics.BrushType.SOLID_COLOR, [1, 1, 1, 0]);
+         button[17].text = "X"; 
+        button[17].textPen = button[17].graphics.newPen (button[17].graphics.PenType.SOLID_COLOR,[1,1,1], 1);
+        //button[17].graphics.drawString("HI",1,1); 
         button[17].onDraw = customDraw;
+        
+        
+        function customDraw()
+            { with( this ) {
+                    //font here
+                    fontFont = ScriptUI.newFont("ArialNarrow", "BOLD", 26);
+            graphics.drawOSControl();
+            graphics.rectPath(0,0,size[0],size[1]);
+            graphics.fillPath(fillBrush);
+            //recenter here
+            if( text ) graphics.drawString(text,textPen,(size[0]-graphics.measureString (text,graphics.font,size[0])[0])/15,-8,fontFont);
+            }}
         
         hasChecked2 = 0;
         
