@@ -196,24 +196,25 @@ function myScript(thisObj){
 
             button[i].onDraw = customDraw;
         }
-        
+         
         //RE-COLOR DEFAULT ICON
         button[17].fillBrush = button[17].graphics.newBrush(button[17].graphics.BrushType.SOLID_COLOR, [1, 1, 1, 0]);
         button[17].text = "X";
         button[17].textPen = button[17].graphics.newPen (button[17].graphics.PenType.SOLID_COLOR,[1,1,1], 1);
-        button[17].onDraw = customDraw;
+        
+        button[17].onDraw = customDraw;  
         
         function customDraw(){
             with( this ) {
                 //FONT FAMILY
-                fontFont = ScriptUI.newFont("ArialNarrow", "BOLD", 26);
+                fontFont = ScriptUI.newFont("MinionPro", "BOLD", 26);
                 
                 graphics.drawOSControl();
                 graphics.rectPath(0,0,size[0],size[1]);
                 graphics.fillPath(fillBrush);
                 
                 //RE-CENTER
-                if( text ) graphics.drawString(text,textPen,(size[0]-graphics.measureString (text,graphics.font,size[0])[0])/15,-8,fontFont);
+                if( text ) graphics.drawString(text,textPen,(size[0]-graphics.measureString (text,graphics.font,size[0])[0])/200,-7,fontFont);
             }
         }
         
