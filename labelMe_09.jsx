@@ -666,7 +666,7 @@ function mainFunction(){
         }   
     }
 
-    if(app.project.selection.length == 1 && !activeItem instanceof CompItem){
+    if(app.project.selection.length == 1 && activeItem instanceof CompItem){
         app.project.selection[0].label = label; 
     }
 
