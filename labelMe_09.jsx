@@ -511,7 +511,7 @@ function myAEScript(thisObj){
             }
         }                            
        
-        if(app.project.selection.length == 1){
+        if(app.project.selection.length == 1 && !activeItem instanceof CompItem){
             layer = app.project.selection[0]; 
 
             if(layer instanceof FootageItem){
@@ -666,7 +666,7 @@ function mainFunction(){
         }   
     }
 
-    if(app.project.selection.length == 1){
+    if(app.project.selection.length == 1 && !activeItem instanceof CompItem){
         app.project.selection[0].label = label; 
     }
 
