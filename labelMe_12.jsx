@@ -556,18 +556,21 @@ function myAEScript(thisObj){
                      
         for(b = 0; b < layerNum; b++){             
             //alert(layer.typeName); 
-            maskColored = false;    
-            if(activeItem instanceof CompItem){
+            if (activeItem instanceof CompItem) {
+                maskColored = false;    
+
                 layer = app.project.activeItem.selectedLayers[b];
-				maskColor = colors[0].slice(0,3);
+                maskColor = colors[0].slice(0, 3);
+
                 
-				colorMasks(layer);
+                colorMasks(layer);
+                if (maskColored)
+                    continue; 
             }else{
                 layer = app.project.selection[b];
             }
 
-            if (maskColored)
-                return;
+
 
             if (layer instanceof AVLayer){
                 // Layer is an AV layer
