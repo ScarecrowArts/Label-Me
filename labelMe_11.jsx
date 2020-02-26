@@ -553,17 +553,21 @@ function myAEScript(thisObj){
         }else{
             var layerNum = app.project.selection.length;                     
         }
-                                    
+                     
         for(b = 0; b < layerNum; b++){             
             //alert(layer.typeName); 
+            maskColored = false;    
             if(activeItem instanceof CompItem){
                 layer = app.project.activeItem.selectedLayers[b];
 				maskColor = colors[0].slice(0,3);
-				
+                
 				colorMasks(layer);
             }else{
                 layer = app.project.selection[b];
             }
+
+            if (maskColored)
+                return;
 
             if (layer instanceof AVLayer){
                 // Layer is an AV layer
@@ -673,10 +677,11 @@ function mainFunction(){
         
         for(b = 0; b <= layerNum; b++){             
             var layer = app.project.activeItem.selectedLayers[b];
-            layer.label = label;  
-			
-			colorMasks(layer);
+            maskColored = false; 
+            colorMasks(layer);
 
+            if(!maskColored)
+            layer.label = label;
 
        }
     }
@@ -717,7 +722,8 @@ function mainFunction(){
 				
 								  var myMask = masks.property(m);
 						
-								  if(myMask.selected == true){
+                                    if (myMask.selected == true) {
+                                        maskColored = true; 
 									myMask.color = maskColor;}
 
 								}
