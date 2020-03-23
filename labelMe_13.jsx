@@ -1,6 +1,6 @@
-//  Copyright (c) 2020 Scarecrow Arts
+﻿//  Copyright (c) 2020 Scarecrow Arts
 //  http://www.scarecrowarts.com
-//  Version 0.05
+//  Version 0.07
 
 var scriptPath = File($.fileName).parent.fsName;
 var file = File;
