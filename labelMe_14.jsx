@@ -23,9 +23,9 @@ function myAEScript(thisObj){
             var remover = myMainPanel.children.length;
             for (tt = 0; tt < remover; tt++) {
                 myMainPanel.remove(0);
-
             }
         }
+    
         if (hasClosed == false) {
             myMainPanel = (thisObj instanceof Panel) ? thisObj : new Window("palette", "labelME", undefined, { resizeable: true });
             mySaveFilePath = "~/Documents/";
@@ -34,56 +34,56 @@ function myAEScript(thisObj){
 
             userData = Folder.userData;
             version = app.version.substring(0, 4);
-			
-			prefName = " Prefs-indep-general.txt";
+            
+            prefixName = "";
+            prefName = " Prefs-indep-general.txt";
 
-			lang = app.isoLanguage;
+            lang = app.isoLanguage;
 
-			//US, obviously
-			if (lang == "en_US"){
-			prefName = " Prefs-indep-general.txt";
-			}
+            //en_US for English (United States)
+            if (lang == "en_US"){
+                prefName = " Prefs-indep-general";
+            }
 
-			//German
-			if (lang == "en_DE"){
-			prefName = " Prefs-indep-general.txt";
-			}			
+            //de_DE for German (Germany)
+            if (lang == "de_DE"){
+                prefName = " Einstellungen-indep-general";
+            }			
 
-			//Spain
-			if (lang == "en_ES"){
-			prefName = " Prefs-indep-general.txt";
-			}
+            //es_ES for Spanish (Spain)
+            if (lang == "es_ES"){
+                prefixName = "Preferencias ";
+                prefName = "-indep-general";
+            }
 
-			//France
-			if (lang == "en_FR"){
-			prefName = ' Pr' + '\xE9' + 'fs-indep-general.txt';
-			}
+            //fr_FR for French (France)
+            if (lang == "fr_FR"){
+                prefName = ' Pr' + '\xE9' + 'fs-indep-general';
+            }
 
-			//Italy
-			if (lang == "en_IT"){
-			prefName = " Prefs-indep-general.txt";
-			}
+            //it_IT for Italian (Italy)
+            if (lang == "it_IT"){
+                prefixName = "Preferenze di ";
+                prefName = "-indep-general";
+            }
 
-			//Japan
-			if (lang == "en_JP"){
-			prefName = " Prefs-indep-general.txt";
-			}
+            //ja_JP for Japanese (Japan)
+            if (lang == "ja_JP"){
+                prefName = " Prefs-indep-general";
+            }
 
-			//Korea
-			if (lang == "en_KR"){
-			prefName = " Prefs-indep-general.txt";
-			}
-			
-
-
+            //ko_KR for Korean (Korea)
+            if (lang == "ko_KR"){
+                prefName = " Prefs-indep-general";
+            }
 
             if (win == 1) {
-                prefFilePath = userData.toString() + "/Adobe/After Effects/" + version + "/Adobe After Effects " + version + prefName;
+                prefFilePath = userData.toString() + "/Adobe/After Effects/" + version + "/" + prefixName + "Adobe After Effects " + version + prefName + ".txt";
             } else {
                 macPath1 = userData.toString();
                 macPath = macPath1.substring(0, macPath1.lastIndexOf("/") + 1);
 
-                prefFilePath = macPath + "Preferences/Adobe/After Effects/" + version + "/Adobe After Effects " + version + prefName;
+                prefFilePath = macPath + "Preferences/Adobe/After Effects/" + version + "/" + prefixName + "Adobe After Effects " + version + prefName + ".txt";
             }
 
             prefFile = File([prefFilePath]);
