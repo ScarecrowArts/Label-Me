@@ -79,7 +79,7 @@ function myAEScript(thisObj){
         
             //pt_BR for Portugese (Brazil)
             if (lang == "pt_BR"){
-                prefixName = "Preferências ";
+                prefixName = "Preferências do ";
                 prefName = "-indep-general";
             }
 
