@@ -1,6 +1,6 @@
 ﻿//  Copyright (c) 2020 Scarecrow Arts
 //  http://www.scarecrowarts.com
-//  Version 1.2
+//  Version 1.3
 
 var scriptPath = File($.fileName).parent.fsName;
 var file = File;
@@ -13,6 +13,7 @@ var button = [];
 var hasClosed = false;
 var colors = [];
 var isBeta = 0;
+var labelKeys = 0;
 if ($.os.indexOf("Windows") != -1 ){
     win = 1;       
 }
@@ -116,6 +117,9 @@ function myAEScript(thisObj){
             }
 
             prefFile = File([prefFilePath]);
+
+            if(version >= 22.6)
+                labelKeys = 1;
   
             //Still nothing found, complain
             if (prefFile.exists == false) {
@@ -557,7 +561,7 @@ function myAEScript(thisObj){
         app.beginUndoGroup("Restore Defaults"); 
 
           //color Keyframes
-            if(isBeta == 1){
+            if(labelKeys == 1){
 
              props = app.project.activeItem.selectedProperties;
      
@@ -785,7 +789,7 @@ function mainFunction(){
     }
 
   //color Keyframes
-    if(isBeta == 1){
+    if(labelKeys == 1){
 
      props = app.project.activeItem.selectedProperties;
      
