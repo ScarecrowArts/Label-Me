@@ -11,7 +11,9 @@ If you find any bugs as new verisons of After Effects are released, feel free to
 
 
 ### CHANGELOG
->
+>**Version 1.3.3 - December 1st 2023**
+>+ Open-sourced our repository on github and cleaned up code formatting for better legibility 
+
 >**Version 1.3.2 - October 31st 2023**
 >+ Fixed an error where the cocksuckers at Adobe decided to change how they number versions of After Effects for no reason in the latest update (e.g. version 24.0.1 is now considered version 24.0 instead)
 

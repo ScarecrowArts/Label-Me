@@ -1,6 +1,6 @@
 ﻿//  Copyright (c) 2023 Scarecrow Arts
 //  http://www.scarecrowarts.com
-//  Version 1.3.2
+//  Version 1.3.3
 
 var scriptPath = File($.fileName).parent.fsName;
 var file = File;
@@ -14,6 +14,7 @@ var hasClosed = false;
 var colors = [];
 var isBeta = 0;
 var labelKeys = 0;
+
 if ($.os.indexOf("Windows") != -1 ){
     win = 1;       
 }
@@ -34,26 +35,17 @@ function myAEScript(thisObj){
             app.preferences.saveToDisk();
             var file = File(mySaveFilePath + "Path" + ".txt");
 
-            userData = Folder.userData;
-
-           
-          
+            userData = Folder.userData;      
             
             //version = app.version.substring(0, 9);
-
 
             //Version names too long, new way to cut out the "X"
             //This could be a very hacky fix, no idea how other names are handled if they dont use x.
 
             //inV = app.version.split("x").length > 1;
-            //alert(inV);
-            
+            //alert(inV); 
           
             version = app.version.split("x")[0];
-    
-                
-
-
 
             prefixName = "";
             prefName = " Prefs-indep-general.txt";
@@ -103,8 +95,7 @@ function myAEScript(thisObj){
                 prefName = "-indep-general";
             }
 
-
-            //IF X in version number 
+            //If X in version number 
             if (win == 1) {
                 prefFilePath = userData.toString() + "/Adobe/After Effects/" + version + "/" + prefixName + "Adobe After Effects " + version + prefName + ".txt";
             } else {
@@ -116,12 +107,8 @@ function myAEScript(thisObj){
 
             prefFile = File([prefFilePath]);
 
-
-
-            //if 3 digits, no x
-            if (prefFile.exists == false) {
-
-                
+            //If 3 digits, no x
+            if (prefFile.exists == false) {                
                 if (win == 1) {
                     prefFilePath = userData.toString() + "/Adobe/After Effects/" + version.substring(0, 4) + "/" + prefixName + "Adobe After Effects " + version.substring(0, 4) + prefName + ".txt";
                 } else {
@@ -132,14 +119,10 @@ function myAEScript(thisObj){
                 }
                
                 prefFile = File([prefFilePath]);
-
             }
 
-
-            //if 4 digits, no x
+            //If 4 digits, no x
             if (prefFile.exists == false) {
-
-
                 if (win == 1) {
                     prefFilePath = userData.toString() + "/Adobe/After Effects/" + version.substring(0, 6) + "/" + prefixName + "Adobe After Effects " + version.substring(0, 4) + prefName + ".txt";
                 } else {
@@ -150,12 +133,10 @@ function myAEScript(thisObj){
                 }
                 
                 prefFile = File([prefFilePath]);
-
             }
 
             //Nothing found, check for beta
             if (prefFile.exists == false) {
-
                 if (win == 1) {
                     prefFilePath = userData.toString() + "/Adobe/After Effects (Beta)/" + version + "/" + prefixName + "Adobe After Effects " + version + prefName + ".txt";
                 } else {
@@ -169,14 +150,10 @@ function myAEScript(thisObj){
 
                 if(prefFile.exists)
                     isBeta = 1;
-
-
             }
 
-            //check beta 3 char
-
+            //Check beta 3 char
             if (prefFile.exists == false) {
-
                 if (win == 1) {
                     prefFilePath = userData.toString() + "/Adobe/After Effects (Beta)/" + version.substring(0, 4) + "/" + prefixName + "Adobe After Effects " + version.substring(0, 4) + prefName + ".txt";
                 } else {
@@ -190,14 +167,10 @@ function myAEScript(thisObj){
 
                 if (prefFile.exists)
                     isBeta = 1;
-
-
             }
 
-            //check beta 4 char
-
+            //Check beta 4 char
             if (prefFile.exists == false) {
-
                 if (win == 1) {
                     prefFilePath = userData.toString() + "/Adobe/After Effects (Beta)/" + version.substring(0, 6) + "/" + prefixName + "Adobe After Effects " + version.substring(0, 6) + prefName + ".txt";
                 } else {
@@ -211,11 +184,7 @@ function myAEScript(thisObj){
 
                 if (prefFile.exists)
                     isBeta = 1;
-
-
             }
-
-
 
             prefFile = File([prefFilePath]);
 
@@ -228,8 +197,6 @@ function myAEScript(thisObj){
                 alert("If that doesn't work write an angry email to Brandy@ScarecrowArts.com");
                 return; 
             }
-
-
         }
         var textArray = readTxt();
         
@@ -430,7 +397,6 @@ function myAEScript(thisObj){
                     is7 = 1;
             }
 
-
             //TOOL TIPS
             for (var i = 1; i <= 16; i++) {
                 for (j = 0; j < textArray.length; j++) {
@@ -536,12 +502,11 @@ function myAEScript(thisObj){
                     videoLabel = myLine1.substr(1, myLine1.length - 2);
                 }
             }
-
         }
         for (var yy = 1; yy < button.length; yy++) {
             button[yy].helpTip = buttonTips[yy];
-
         }
+    
         //FIX NONE/DEFAULT TOOLTIP
         button[0].helpTip = '"None"';
         button[17].helpTip = '"Return to Default"';
@@ -576,7 +541,6 @@ function myAEScript(thisObj){
     }
 
     function onButtonPress01(){
-
         label = 1; 
         mainFunction(); 
     }
@@ -661,7 +625,7 @@ function myAEScript(thisObj){
         var activeItem = app.project.activeItem;
         app.beginUndoGroup("Restore Defaults"); 
 
-          //color Keyframes
+        //Color Keyframes
         if (labelKeys == 1 && activeItem != null && activeItem instanceof CompItem){
 
              props = app.project.activeItem.selectedProperties;
@@ -677,10 +641,9 @@ function myAEScript(thisObj){
                                     props[p].setLabelAtKey(t,0);        
                                 }
                         }
-           
                   }
                   //end if has colored keys --- not for this??
-                   //return;
+                  //return;
                }
             }
 
@@ -689,9 +652,6 @@ function myAEScript(thisObj){
 
             for (var i = 0; i <= mySelectedItems.length; i++){
                 layer = mySelectedItems[i]; 
-
-				
-
 
                 if(layer instanceof FootageItem){
                     layer.label = Number(videoLabel);
@@ -711,7 +671,6 @@ function myAEScript(thisObj){
                      if(layer.hasAudio && !layer.hasVideo){
                             layer.label = Number(audioLabel);      
                      }
-                
                 }
 
                 if(layer instanceof CompItem){
@@ -745,7 +704,6 @@ function myAEScript(thisObj){
                if(layer.hasAudio && !layer.hasVideo){
                             layer.label = Number(audioLabel);      
                }            
-            
             }
                   
             if(layer instanceof CompItem){
@@ -778,8 +736,6 @@ function myAEScript(thisObj){
             }else{
                 layer = app.project.selection[b];
             }
-
-
 
             if (layer instanceof AVLayer){
                 // Layer is an AV layer
@@ -865,7 +821,6 @@ function myAEScript(thisObj){
         hasClosed = true; 
         myAEScript_buildUI(thisObj);
 
-
     }
 }
 
@@ -875,21 +830,16 @@ function mainFunction(){
 
     app.beginUndoGroup("labelME");
 
-
-
-			 if(label == 0){
-			 maskColor = [0.4, 0.4, 0.4]}else{
+    if(label == 0){
+        maskColor = [0.4, 0.4, 0.4]}else{
         maskColor = colors[label - 1].slice(0, 3)
     }
 
-
     if (app.project.selection.length == 1) {
-
         app.project.selection[0].label = label;
-
     }
 
-  //color Keyframes
+    //Color Keyframes
     if (labelKeys == 1 && activeItem != null && activeItem instanceof CompItem){
 
      props = app.project.activeItem.selectedProperties;
@@ -904,15 +854,12 @@ function mainFunction(){
                             t = props[p].selectedKeys[n];
                             props[p].setLabelAtKey(t,label);        
                         }
-                }
-           
+                } 
           }
           //end if has colored keys
            return;
        }
     }
-			 
-		  
 
     if (activeItem != null && activeItem instanceof CompItem){
         var layerNum = app.project.activeItem.selectedLayers.length; 
@@ -929,43 +876,33 @@ function mainFunction(){
     }
 
 	if(activeItem == null){
-				var mySelectedItems = app.project.selection; 
+		var mySelectedItems = app.project.selection; 
 
-				if(mySelectedItems.length > 0){
-							for (var i = 0; i <= mySelectedItems.length; i++){
-								mySelectedItems[i].label = label; 
-							}   
-			  }
-	  }
+		if(mySelectedItems.length > 0){
+			for (var i = 0; i <= mySelectedItems.length; i++){
+				mySelectedItems[i].label = label; 
+			}   
+        }
+    }
 	 
-
-
-
-
-
     myMainPanel.parent.show();
     myMainPanel.update();
 
-
-
     app.endUndoGroup();
 }
-	function colorMasks(layer){
-				 var masks = layer('Masks');
+
+function colorMasks(layer){
+    var masks = layer('Masks');
 		 
-						 if (masks!= null && masks.numProperties > 0) {
-
-									  
-								for (var m = 1; m <= masks.numProperties; m++) {
-				
-								  var myMask = masks.property(m);
+    if (masks!= null && masks.numProperties > 0) {							  
+        for (var m = 1; m <= masks.numProperties; m++) {	
+            var myMask = masks.property(m);
 						
-                                    if (myMask.selected == true) {
-                                        maskColored = true; 
-									myMask.color = maskColor;}
-
-								}
-
-					  }
-	}
+            if (myMask.selected == true) {
+                maskColored = true; 
+                myMask.color = maskColor;
+            }
+        }
+    }
+}
 myAEScript(this);
