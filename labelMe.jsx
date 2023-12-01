@@ -1,4 +1,4 @@
-﻿//  Copyright (c) 2023 Scarecrow Arts
+﻿//  Scarecrow Arts LLC
 //  http://www.scarecrowarts.com
 //  Version 1.3.3
 
