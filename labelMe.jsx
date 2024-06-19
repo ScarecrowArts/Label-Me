@@ -1,6 +1,6 @@
 ﻿//  Scarecrow Arts LLC
 //  http://www.scarecrowarts.com
-//  Version 1.3.3
+//  Version 1.3.5
 
 var scriptPath = File($.fileName).parent.fsName;
 var file = File;
@@ -90,10 +90,11 @@ function myAEScript(thisObj){
             }
         
             //pt_BR for Portugese (Brazil)
-            if (lang == "pt_BR"){
-                prefixName = "Preferências do ";
+            if (lang == "pt_BR") {
+                prefixName = "Prefer" + '\xEA' + "ncias do ";
                 prefName = "-indep-general";
             }
+
 
             //If X in version number 
             if (win == 1) {
@@ -190,7 +191,7 @@ function myAEScript(thisObj){
 
             if(version >= 22.6)
                 labelKeys = 1;
-  
+            
             //Still nothing found, complain, cry
             if (prefFile.exists == false) {
                 alert("No preference file found. Make sure you have saved your preferences and enable scripts to read/write files.");
