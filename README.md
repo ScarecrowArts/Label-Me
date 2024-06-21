@@ -12,7 +12,7 @@ If you find any bugs as new verisons of After Effects are released, feel free to
 
 ### CHANGELOG
 >**Version 1.3.5 - June 21st 2024**
->+ Fixed a bug pertaining to the Beta Branchs and Portugese-Brazil Installations 
+>+ Fixed a bug pertaining to the Beta Branches and Portugese-Brazil Installations 
 
 >**Version 1.3.3 - December 1st 2023**
 >+ Open-sourced our repository on github and cleaned up code formatting for better legibility 
