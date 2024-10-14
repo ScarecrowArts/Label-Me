@@ -11,6 +11,10 @@ If you find any bugs as new verisons of After Effects are released, feel free to
 
 
 ### CHANGELOG
+>**Version 1.3.6 - October 13th 2024**
+>+ Fixed a bug where some versions of AE are written as strings
+>+ Fixed a bug preventing labelME from coloring keyframes on the timeline including masks and shape paths
+
 >**Version 1.3.5 - June 21st 2024**
 >+ Fixed a bug pertaining to the Beta Branches and Portugese-Brazil Installations 
 

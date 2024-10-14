@@ -1,6 +1,6 @@
 ﻿//  Scarecrow Arts LLC
 //  http://www.scarecrowarts.com
-//  Version 1.3.5
+//  Version 1.3.6
 
 var scriptPath = File($.fileName).parent.fsName;
 var file = File;
@@ -189,8 +189,9 @@ function myAEScript(thisObj){
 
             prefFile = File([prefFilePath]);
 
-            if(version >= 22.6)
+            if (version_to_number(version) >= version_to_number("22.6.0")) {
                 labelKeys = 1;
+            }
             
             //Still nothing found, complain, cry
             if (prefFile.exists == false) {
@@ -199,6 +200,17 @@ function myAEScript(thisObj){
                 return; 
             }
         }
+
+        function version_to_number(version) {
+            var parts = version.split('.');
+            var sum = 0;
+            for (var i = 0; i < parts.size; i++) {
+                sum *= 100;
+                sum += parseInt(parts[i]);
+            }
+            return sum;
+        }
+
         var textArray = readTxt();
         
         function readTxt() {
@@ -843,11 +855,29 @@ function mainFunction(){
     //Color Keyframes
     if (labelKeys == 1 && activeItem != null && activeItem instanceof CompItem){
 
-     props = app.project.activeItem.selectedProperties;
-     
-     if(props.length > 0){
+    //color prop groups first
+    if (activeItem != null && activeItem instanceof CompItem) {
+        var layerNum = app.project.activeItem.selectedLayers.length;
 
-             for(p = 0; p < props.length; p ++){
+        for (b = 0; b < layerNum; b++) {
+            var layer = app.project.activeItem.selectedLayers[b];
+            shapeKeysColor(layer);
+            colorMaskKeys(layer);         
+        }
+    }
+
+    props = app.project.activeItem.selectedProperties;
+
+    //non prop group keys
+     if(props.length > 0){
+            
+         for (p = 0; p < props.length; p++){
+             pname = props[p].matchName;
+
+             //check name or if property group, already colored keys
+             if (pname == "ADBE Mask Atom" || pname == "ADBE Vector Group" || pname == "ADBE Vector Shape - Group" || props[p].numProperties > 0)
+                 continue;
+
              keySelection = props[p].selectedKeys; 
 
              if(keySelection.length > 0){
@@ -867,10 +897,6 @@ function mainFunction(){
         
         for(b = 0; b <= layerNum; b++){             
             var layer = app.project.activeItem.selectedLayers[b];
-            maskColored = false; 
-            colorMasks(layer);
-
-            if(!maskColored)
             layer.label = label;
 
        }
@@ -891,6 +917,58 @@ function mainFunction(){
 
     app.endUndoGroup();
 }
+
+function colorMaskKeys(layer) {
+    var masks = layer('Masks');
+    if (masks != null && masks.numProperties > 0) {
+        for (var m = 1; m <= masks.numProperties; m++) {
+            var myMask = masks.property(m);
+            if (myMask.selected == true) {
+                //check if keys selected
+                hasSetKeysM = false;
+                for (mpn = 1; mpn <= myMask.numProperties; mpn++) {
+                    thisMpn = myMask.property(mpn);
+                    theseMpKeys = (thisMpn.selectedKeys);
+                    for (mp = 0; mp < theseMpKeys.length; mp++) {
+                        thisMpn.setLabelAtKey(theseMpKeys[mp], label);
+                        hasSetKeysM = true;
+                    }                   
+                }
+
+                //No keys selected, color mask path
+                if (!hasSetKeysM)
+                    colorMasks(layer);
+            }
+        }
+    }
+}
+
+function shapeKeysColor(layer) {
+
+    myLayer = layer;
+    if (myLayer instanceof ShapeLayer) {
+        var myContents = myLayer.property("Contents");
+        propertySearch(myContents);
+    } 
+    
+    function propertySearch(a) {
+            for (var j = 1; j <= a.numProperties; j++) {
+               
+                for (var k = 1; k <= a.property(j).numProperties; k++) {
+                    theseShapeKeys = a.property(j).property(k).selectedKeys;
+                    if (theseShapeKeys != null) {
+                        if (theseShapeKeys.length > 0) {
+                            for (sk = 0; sk < theseShapeKeys.length; sk++) {
+                                a.property(j).property(k).setLabelAtKey(theseShapeKeys[sk], label);
+                            }
+                        }
+                    }
+                    propertySearch(a.property(j).property(k));
+                }
+            }
+        }   
+}
+
 
 function colorMasks(layer){
     var masks = layer('Masks');
